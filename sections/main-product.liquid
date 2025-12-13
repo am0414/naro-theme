@@ -220,6 +220,18 @@
     opacity: 1;
   }
 
+  .naro-set-option .set-discount {
+    display: block;
+    font-size: 10px;
+    color: #e74c3c;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .naro-set-option.selected .set-discount {
+    color: #ffcccc;
+  }
+
   .naro-set-option input {
     display: none;
   }
@@ -361,6 +373,8 @@
                         onchange="updateVariant()"
                       >
                       {{ value }}
+                      {% if value == '2枚セット' %}<span class="set-discount">12% OFF</span>{% endif %}
+                      {% if value == '3枚セット' %}<span class="set-discount">25% OFF</span>{% endif %}
                       <span class="set-price">
                         {% if value == '1枚' %}¥3,990{% endif %}
                         {% if value == '2枚セット' %}¥6,980{% endif %}
