@@ -1,0 +1,112 @@
+{% comment %}
+  NARO - Header Section
+  シンプルなヘッダー
+{% endcomment %}
+
+<style>
+  .naro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .naro-logo {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .naro-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .naro-nav-link {
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .naro-nav-link:hover {
+    color: #1a1a1a;
+  }
+
+  .naro-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .naro-cart svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .naro-cart-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 600px) {
+    .naro-header {
+      padding: 15px 20px;
+    }
+    
+    .naro-nav {
+      gap: 20px;
+    }
+    
+    .naro-nav-link {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<header class="naro-header">
+  <a href="/" class="naro-logo">NARO</a>
+  
+  <nav class="naro-nav">
+    <a href="/pages/faq" class="naro-nav-link">FAQ</a>
+    <a href="/pages/contact" class="naro-nav-link">Contact</a>
+    <a href="/cart" class="naro-cart">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+      </svg>
+      {% if cart.item_count > 0 %}
+        <span class="naro-cart-count">{{ cart.item_count }}</span>
+      {% endif %}
+    </a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
