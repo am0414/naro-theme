@@ -102,7 +102,6 @@
     font-size: 12px;
     letter-spacing: 2px;
     color: var(--naro-gray-dark);
-    text-transform: uppercase;
     margin-bottom: 10px;
   }
 
@@ -118,7 +117,25 @@
     font-size: 24px;
     font-weight: 600;
     color: var(--naro-black);
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .naro-price-per-item {
+    font-size: 14px;
+    color: var(--naro-gray-dark);
     margin-bottom: 30px;
+  }
+
+  .naro-discount-badge {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
   }
 
   .naro-description {
@@ -134,7 +151,7 @@
 
   /* バリアント選択 */
   .naro-variants {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .naro-variant-label {
@@ -172,6 +189,41 @@
     display: none;
   }
 
+  /* セットオプション特別スタイル */
+  .naro-set-option {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: var(--naro-white);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .naro-set-option:hover,
+  .naro-set-option.selected {
+    border-color: var(--naro-black);
+    background: var(--naro-black);
+    color: var(--naro-white);
+  }
+
+  .naro-set-option .set-price {
+    display: block;
+    font-size: 11px;
+    margin-top: 4px;
+    opacity: 0.8;
+  }
+
+  .naro-set-option.selected .set-price {
+    opacity: 1;
+  }
+
+  .naro-set-option input {
+    display: none;
+  }
+
   /* カートボタン */
   .naro-add-to-cart {
     width: 100%;
@@ -186,6 +238,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: 20px;
+    margin-top: 10px;
   }
 
   .naro-add-to-cart:hover {
@@ -283,7 +336,8 @@
     <div class="naro-product-info">
       <p class="naro-brand">naro</p>
       <h1 class="naro-title">{{ product.title }}</h1>
-      <p class="naro-price">¥{{ product.price | money_without_currency | remove: '.00' }}</p>
+      <p class="naro-price" id="product-price">¥{{ product.selected_or_first_available_variant.price | money_without_currency | remove: '.00' }}</p>
+      <p class="naro-price-per-item" id="price-per-item"></p>
 
       <div class="naro-description">
         {{ product.description }}
@@ -297,16 +351,34 @@
               <label class="naro-variant-label">{{ option.name }}</label>
               <div class="naro-color-options">
                 {% for value in option.values %}
-                  <label class="naro-color-option {% if forloop.first %}selected{% endif %}">
-                    <input 
-                      type="radio" 
-                      name="{{ option.name }}" 
-                      value="{{ value }}"
-                      {% if forloop.first %}checked{% endif %}
-                      onchange="updateVariant()"
-                    >
-                    {{ value }}
-                  </label>
+                  {% if option.name == 'セット' %}
+                    <label class="naro-set-option {% if forloop.first %}selected{% endif %}">
+                      <input 
+                        type="radio" 
+                        name="{{ option.name }}" 
+                        value="{{ value }}"
+                        {% if forloop.first %}checked{% endif %}
+                        onchange="updateVariant()"
+                      >
+                      {{ value }}
+                      <span class="set-price">
+                        {% if value == '1枚' %}¥3,990{% endif %}
+                        {% if value == '2枚セット' %}¥6,980{% endif %}
+                        {% if value == '3枚セット' %}¥8,970{% endif %}
+                      </span>
+                    </label>
+                  {% else %}
+                    <label class="naro-color-option {% if forloop.first %}selected{% endif %}">
+                      <input 
+                        type="radio" 
+                        name="{{ option.name }}" 
+                        value="{{ value }}"
+                        {% if forloop.first %}checked{% endif %}
+                        onchange="updateVariant()"
+                      >
+                      {{ value }}
+                    </label>
+                  {% endif %}
                 {% endfor %}
               </div>
             </div>
@@ -314,7 +386,7 @@
           
           <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
           
-          <button type="submit" class="naro-add-to-cart" {% unless product.available %}disabled{% endunless %}>
+          <button type="submit" class="naro-add-to-cart" id="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
             {% if product.available %}
               カートに追加
             {% else %}
@@ -386,15 +458,15 @@
   }
 
   // カラーオプション選択
-  document.querySelectorAll('.naro-color-option').forEach(option => {
+  document.querySelectorAll('.naro-color-option, .naro-set-option').forEach(option => {
     option.addEventListener('click', function() {
-      const siblings = this.parentElement.querySelectorAll('.naro-color-option');
+      const siblings = this.parentElement.querySelectorAll('.naro-color-option, .naro-set-option');
       siblings.forEach(s => s.classList.remove('selected'));
       this.classList.add('selected');
     });
   });
 
-  // バリアント更新
+  // バリアント更新と価格表示
   function updateVariant() {
     const productVariants = {{ product.variants | json }};
     const selectedOptions = [];
@@ -411,8 +483,41 @@
 
     if (selectedVariant) {
       document.getElementById('variant-id').value = selectedVariant.id;
+      
+      // 価格を更新
+      const price = selectedVariant.price / 100;
+      document.getElementById('product-price').innerHTML = '¥' + price.toLocaleString();
+      
+      // 1枚あたりの価格を計算
+      const pricePerItem = document.getElementById('price-per-item');
+      const setOption = selectedOptions.find(opt => opt.includes('枚'));
+      
+      if (setOption === '2枚セット') {
+        const perItem = Math.round(price / 2);
+        pricePerItem.innerHTML = '1枚あたり ¥' + perItem.toLocaleString() + ' <span class="naro-discount-badge">12% OFF</span>';
+      } else if (setOption === '3枚セット') {
+        const perItem = Math.round(price / 3);
+        pricePerItem.innerHTML = '1枚あたり ¥' + perItem.toLocaleString() + ' <span class="naro-discount-badge">25% OFF</span>';
+      } else {
+        pricePerItem.innerHTML = '';
+      }
+      
+      // ボタンの状態を更新
+      const btn = document.getElementById('add-to-cart-btn');
+      if (selectedVariant.available) {
+        btn.disabled = false;
+        btn.textContent = 'カートに追加';
+      } else {
+        btn.disabled = true;
+        btn.textContent = '売り切れ';
+      }
     }
   }
+
+  // 初期表示時に価格を更新
+  document.addEventListener('DOMContentLoaded', function() {
+    updateVariant();
+  });
 </script>
 
 {% schema %}
