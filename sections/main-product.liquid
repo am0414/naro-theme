@@ -400,7 +400,7 @@
           
           <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
           
-          <button type="submit" class="naro-add-to-cart" id="add-to-cart-btn" {% unless product.available %}disabled{% endunless %}>
+          <button type="submit" class="naro-add-to-cart" id="add-to-cart-btn" onclick="trackAddToCart()" {% unless product.available %}disabled{% endunless %}>
             {% if product.available %}
               カートに追加
             {% else %}
@@ -411,7 +411,7 @@
       {% else %}
         <form action="/cart/add" method="post">
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="naro-add-to-cart" {% unless product.available %}disabled{% endunless %}>
+          <button type="submit" class="naro-add-to-cart" onclick="trackAddToCart()" {% unless product.available %}disabled{% endunless %}>
             {% if product.available %}
               カートに追加
             {% else %}
@@ -532,6 +532,32 @@
   document.addEventListener('DOMContentLoaded', function() {
     updateVariant();
   });
+
+  // Meta Pixel - Add to Cart イベント
+  function trackAddToCart() {
+    const productVariants = {{ product.variants | json }};
+    const selectedOptions = [];
+    
+    document.querySelectorAll('.naro-color-options input:checked').forEach(input => {
+      selectedOptions.push(input.value);
+    });
+
+    const selectedVariant = productVariants.find(variant => {
+      return selectedOptions.every((option, index) => {
+        return variant.options[index] === option;
+      });
+    });
+
+    if (selectedVariant && typeof fbq !== 'undefined') {
+      fbq('track', 'AddToCart', {
+        content_name: '{{ product.title }}',
+        content_ids: [selectedVariant.id.toString()],
+        content_type: 'product',
+        value: selectedVariant.price / 100,
+        currency: 'JPY'
+      });
+    }
+  }
 </script>
 
 {% schema %}
