@@ -14,7 +14,14 @@
     })(window, document, "clarity", "script", "uloncs5her");
   </script>
 
+  {% if template == 'index' %}
+  <script>
+    window.location.href = '/products/flat-front-thong';
+  </script>
+  {% endif %}
+
   <!-- Meta Pixel Code -->
+  {% unless template == 'index' %}
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -27,13 +34,8 @@
   fbq('init', '2366483327109464');
   fbq('track', 'PageView');
   </script>
+  {% endunless %}
   <!-- End Meta Pixel Code -->
-  
-  {% if template == 'index' %}
-  <script>
-    window.location.href = '/products/flat-front-thong';
-  </script>
-  {% endif %}
   
   {{ content_for_header }}
   
