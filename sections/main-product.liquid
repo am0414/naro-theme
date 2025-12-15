@@ -1069,6 +1069,83 @@
     font-size: 16px;
   }
 
+  /* ===== PRODUCT DETAILS ACCORDION ===== */
+  .naro-product-details {
+    margin-top: 32px;
+    border-top: 1px solid var(--gray-200);
+    padding-top: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-product-details {
+      margin-top: 24px;
+      padding-top: 20px;
+    }
+  }
+
+  .naro-details-accordion {
+    background: var(--white);
+  }
+
+  .naro-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+  }
+
+  .naro-details-header:hover {
+    color: var(--gray-500);
+  }
+
+  .naro-details-toggle {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--gray-500);
+    transition: transform 0.3s ease;
+  }
+
+  .naro-details-accordion.open .naro-details-toggle {
+    transform: rotate(45deg);
+  }
+
+  .naro-details-body {
+    display: none;
+    padding-top: 16px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--gray-500);
+  }
+
+  @media (max-width: 768px) {
+    .naro-details-body {
+      font-size: 12px;
+    }
+  }
+
+  .naro-details-accordion.open .naro-details-body {
+    display: block;
+  }
+
+  .naro-details-body p {
+    margin-bottom: 8px;
+  }
+
+  .naro-details-body .naro-details-note {
+    font-size: 12px;
+    margin-top: 12px;
+    color: var(--gray-500);
+  }
+
+  @media (max-width: 768px) {
+    .naro-details-body .naro-details-note {
+      font-size: 11px;
+    }
+  }
+
   /* ===== FAQ SECTION ===== */
   .naro-faq {
     padding: 120px 20px;
@@ -1231,61 +1308,6 @@
   .naro-final-cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 40px rgba(255,255,255,0.2);
-  }
-
-  /* ===== DETAILS SECTION ===== */
-  .naro-details-section {
-    padding: 80px 20px;
-    background: var(--white);
-    border-top: 1px solid var(--gray-200);
-  }
-
-  @media (max-width: 768px) {
-    .naro-details-section {
-      padding: 48px 16px;
-    }
-  }
-
-  .naro-details-inner {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .naro-details-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    letter-spacing: 0.1em;
-  }
-
-  @media (max-width: 768px) {
-    .naro-details-title {
-      font-size: 13px;
-      margin-bottom: 16px;
-    }
-  }
-
-  .naro-details-content {
-    font-size: 14px;
-    line-height: 2;
-    color: var(--gray-500);
-  }
-
-  @media (max-width: 768px) {
-    .naro-details-content {
-      font-size: 13px;
-      line-height: 1.9;
-    }
-  }
-
-  .naro-details-content p {
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-details-content p {
-      margin-bottom: 12px;
-    }
   }
 </style>
 
@@ -1537,6 +1559,24 @@
             ¥5,000以上で送料無料
           </div>
         </div>
+
+        <!-- 商品詳細（アコーディオン） -->
+        <div class="naro-product-details">
+          <div class="naro-details-accordion">
+            <div class="naro-details-header" onclick="toggleDetails(this)">
+              <span>商品詳細</span>
+              <span class="naro-details-toggle">+</span>
+            </div>
+            <div class="naro-details-body">
+              <p><strong>素材</strong>：ナイロン85%、ポリウレタン15%</p>
+              <p><strong>サイズ</strong>：S / M / L</p>
+              <p><strong>カラー</strong>：ブラック / ベージュ</p>
+              <p><strong>生産国</strong>：中国</p>
+              <p class="naro-details-note">※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
+              <p class="naro-details-note">※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1594,21 +1634,6 @@
     <a href="#product" class="naro-final-cta-button">今すぐ購入する</a>
   </section>
 
-  <!-- DETAILS SECTION -->
-  <section class="naro-details-section">
-    <div class="naro-details-inner">
-      <h3 class="naro-details-title">商品詳細</h3>
-      <div class="naro-details-content">
-        <p><strong>素材</strong>：ナイロン85%、ポリウレタン15%</p>
-        <p><strong>サイズ</strong>：S / M / L</p>
-        <p><strong>カラー</strong>：ブラック / ベージュ</p>
-        <p><strong>生産国</strong>：中国</p>
-        <p>※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
-        <p>※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
-      </div>
-    </div>
-  </section>
-
 </div>
 
 <script>
@@ -1636,6 +1661,12 @@
   function toggleFaq(element) {
     const item = element.parentElement;
     item.classList.toggle('open');
+  }
+
+  // 商品詳細アコーディオン開閉
+  function toggleDetails(element) {
+    const accordion = element.parentElement;
+    accordion.classList.toggle('open');
   }
 
   // バリアント更新
