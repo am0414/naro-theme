@@ -1,89 +1,487 @@
 {% comment %}
-  naro - Main Product Section
-  シンプルでモダンな商品ページ
+  naro - LP風商品ページ v4
+  v1の配色 + ゴシック体 + スクロールアニメーション
 {% endcomment %}
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+  
   :root {
-    --naro-black: #1a1a1a;
-    --naro-white: #ffffff;
-    --naro-gray: #f5f5f5;
-    --naro-gray-dark: #888888;
-    --naro-accent: #000000;
+    --black: #1a1a1a;
+    --white: #ffffff;
+    --cream: #faf9f7;
+    --gray-100: #f5f5f5;
+    --gray-200: #e8e8e8;
+    --gray-500: #666666;
+    --gray-700: #404040;
   }
 
-  * {
+  .naro-lp * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-  .naro-product {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-    max-width: 1400px;
+  .naro-lp {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--black);
+    line-height: 1.8;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    background: var(--white);
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== HERO ===== */
+  .naro-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+    padding: 100px 24px 80px;
+  }
+
+  .naro-hero-inner {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .naro-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .naro-hero {
+      min-height: auto;
+      padding: 80px 20px 60px;
+    }
+  }
+
+  .naro-hero-image {
+    position: relative;
+  }
+
+  .naro-hero-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+  }
+
+  .naro-hero-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--black);
+    color: var(--white);
+    padding: 8px 16px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+
+  .naro-hero-content {
+    padding: 20px 0;
+  }
+
+  .naro-hero-brand {
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--gray-500);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .naro-hero-title {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+
+  .naro-hero-title strong {
+    font-weight: 600;
+    display: block;
+  }
+
+  .naro-hero-subtitle {
+    font-size: 16px;
+    color: var(--gray-500);
+    margin-bottom: 32px;
+    line-height: 1.9;
+  }
+
+  .naro-hero-price {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .naro-hero-price small {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-500);
+    margin-left: 8px;
+  }
+
+  .naro-hero-cta {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    padding: 18px 48px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .naro-hero-cta:hover {
+    background: var(--gray-700);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  /* ===== SECTION COMMON ===== */
+  .naro-section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .naro-section-label {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .naro-section-title {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.5;
+  }
+
+  /* ===== PROBLEM SECTION ===== */
+  .naro-problem {
+    padding: 120px 20px;
+    background: var(--white);
+  }
+
+  .naro-problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .naro-problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--cream);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  .naro-problem-item:hover {
+    transform: translateX(8px);
+  }
+
+  .naro-problem-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .naro-problem-text {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .naro-problem-text strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  /* ===== SOLUTION SECTION ===== */
+  .naro-solution {
+    padding: 120px 20px;
+    background: var(--cream);
+  }
+
+  .naro-solution-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .naro-solution-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  .naro-solution-image {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .naro-solution-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+
+  .naro-solution-content .naro-section-label {
+    text-align: left;
+  }
+
+  .naro-solution-content .naro-section-title {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .naro-solution-text {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--gray-500);
+    margin-bottom: 32px;
+  }
+
+  .naro-solution-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .naro-solution-feature {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .naro-solution-feature-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--gray-200);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background: var(--white);
+  }
+
+  /* ===== FEATURES SECTION ===== */
+  .naro-features {
+    padding: 120px 20px;
+    background: var(--white);
+  }
+
+  .naro-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .naro-features-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .naro-feature-card {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--cream);
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .naro-feature-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .naro-feature-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 24px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .naro-feature-card:hover .naro-feature-icon {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+  }
+
+  .naro-feature-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .naro-feature-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    line-height: 1.8;
+  }
+
+  /* ===== SCENES SECTION ===== */
+  .naro-scenes {
+    padding: 120px 20px;
+    background: var(--cream);
+  }
+
+  .naro-scenes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .naro-scenes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .naro-scene-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 40px 24px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .naro-scene-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+
+  .naro-scene-emoji {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .naro-scene-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .naro-scene-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+  }
+
+  /* ===== PRODUCT SECTION ===== */
+  .naro-product-section {
+    padding: 120px 20px;
+    background: var(--white);
   }
 
   .naro-product-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
     align-items: start;
   }
 
   @media (max-width: 900px) {
     .naro-product-container {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 40px;
     }
   }
 
-  /* 画像ギャラリー */
   .naro-gallery {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
+    position: sticky;
+    top: 100px;
   }
 
   .naro-main-image {
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
-    background: var(--naro-gray);
-    border-radius: 8px;
+    background: var(--gray-100);
+    border-radius: 12px;
   }
 
   .naro-main-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .naro-main-image:hover img {
-    transform: scale(1.02);
   }
 
   .naro-thumbnails {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 10px;
+    gap: 12px;
   }
 
   .naro-thumbnail {
     aspect-ratio: 1;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.2s ease;
-    background: var(--naro-gray);
+    background: var(--gray-100);
   }
 
   .naro-thumbnail:hover,
   .naro-thumbnail.active {
-    border-color: var(--naro-black);
+    border-color: var(--black);
   }
 
   .naro-thumbnail img {
@@ -92,278 +490,499 @@
     object-fit: cover;
   }
 
-  /* 商品情報 */
   .naro-product-info {
-    position: sticky;
-    top: 40px;
+    padding: 20px 0;
   }
 
-  .naro-brand {
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--naro-gray-dark);
-    margin-bottom: 10px;
+  .naro-product-brand {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+    text-transform: uppercase;
   }
 
-  .naro-title {
+  .naro-product-title {
     font-size: 28px;
     font-weight: 500;
-    color: var(--naro-black);
-    margin-bottom: 15px;
-    line-height: 1.3;
+    margin-bottom: 16px;
   }
 
-  .naro-price {
-    font-size: 24px;
+  .naro-product-price {
+    font-size: 32px;
     font-weight: 600;
-    color: var(--naro-black);
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
+    margin-bottom: 8px;
   }
 
   .naro-price-per-item {
     font-size: 14px;
-    color: var(--naro-gray-dark);
-    margin-bottom: 30px;
+    color: var(--gray-500);
+    margin-bottom: 32px;
+    min-height: 20px;
   }
 
   .naro-discount-badge {
     display: inline-block;
-    background: #e74c3c;
-    color: white;
-    padding: 4px 10px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 2px 8px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: 600;
-    margin-left: 10px;
+    margin-left: 8px;
   }
 
-  .naro-description {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 30px;
+  .naro-option-group {
+    margin-bottom: 28px;
   }
 
-  .naro-description p {
-    margin-bottom: 15px;
-  }
-
-  /* バリアント選択 */
-  .naro-variants {
-    margin-bottom: 20px;
-  }
-
-  .naro-variant-label {
+  .naro-option-label {
     font-size: 13px;
-    font-weight: 500;
-    color: var(--naro-black);
+    font-weight: 600;
     margin-bottom: 12px;
     display: block;
   }
 
   .naro-color-options {
     display: flex;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
   }
 
   .naro-color-option {
     padding: 12px 24px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: var(--naro-white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
     transition: all 0.2s ease;
+    background: var(--white);
   }
 
-  .naro-color-option:hover,
-  .naro-color-option.selected {
-    border-color: var(--naro-black);
-    background: var(--naro-black);
-    color: var(--naro-white);
+  .naro-color-option:hover {
+    border-color: var(--gray-500);
+  }
+
+  .naro-color-option.selected,
+  .naro-color-option:has(input:checked) {
+    border-color: var(--black);
+    background: var(--black);
+    color: var(--white);
   }
 
   .naro-color-option input {
     display: none;
   }
 
-  /* セットオプション特別スタイル */
+  .naro-set-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .naro-set-option {
-    padding: 12px 20px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: var(--naro-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 13px;
     transition: all 0.2s ease;
-    text-align: center;
-    min-width: 100px;
+    background: var(--white);
   }
 
-  .naro-set-option:hover,
-  .naro-set-option.selected {
-    border-color: var(--naro-black);
-    background: var(--naro-black);
-    color: var(--naro-white);
+  .naro-set-option:hover {
+    border-color: var(--gray-500);
   }
 
-  .naro-set-option .set-price {
-    display: block;
-    font-size: 11px;
-    margin-top: 4px;
-    opacity: 0.8;
-  }
-
-  .naro-set-option.selected .set-price {
-    opacity: 1;
-  }
-
-  .naro-set-option .set-discount {
-    display: block;
-    font-size: 10px;
-    color: #e74c3c;
-    font-weight: 600;
-    margin-top: 2px;
-  }
-
-  .naro-set-option.selected .set-discount {
-    color: #ffcccc;
+  .naro-set-option.selected,
+  .naro-set-option:has(input:checked) {
+    border-color: var(--black);
+    background: var(--cream);
   }
 
   .naro-set-option input {
     display: none;
   }
 
-  /* カートボタン */
+  .naro-set-name {
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .naro-set-badge {
+    background: var(--black);
+    color: var(--white);
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  .naro-set-price {
+    font-size: 14px;
+    color: var(--gray-500);
+  }
+
   .naro-add-to-cart {
     width: 100%;
-    padding: 18px 30px;
-    background: var(--naro-black);
-    color: var(--naro-white);
+    padding: 20px;
+    background: var(--black);
+    color: var(--white);
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    font-family: inherit;
   }
 
   .naro-add-to-cart:hover {
-    background: #333;
-    transform: translateY(-1px);
+    background: var(--gray-700);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   }
 
   .naro-add-to-cart:disabled {
-    background: #ccc;
+    background: var(--gray-500);
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
   }
 
-  /* 特典リスト */
   .naro-benefits {
-    border-top: 1px solid #eee;
-    padding-top: 25px;
-    margin-top: 10px;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .naro-benefit {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 0;
-    font-size: 13px;
-    color: #555;
+    font-size: 14px;
+    color: var(--gray-500);
   }
 
   .naro-benefit-icon {
-    width: 20px;
-    height: 20px;
+    color: #2e7d32;
+    font-size: 16px;
+  }
+
+  /* ===== FAQ SECTION ===== */
+  .naro-faq {
+    padding: 120px 20px;
+    background: var(--cream);
+  }
+
+  .naro-faq-list {
+    max-width: 700px;
+    margin: 0 auto;
     display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .naro-faq-item {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .naro-faq-question {
+    padding: 24px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    transition: background 0.2s ease;
   }
 
-  .naro-benefit-icon svg {
-    width: 18px;
-    height: 18px;
-    stroke: var(--naro-black);
+  .naro-faq-question:hover {
+    background: var(--gray-100);
   }
 
-  /* 素材情報 */
-  .naro-details {
-    margin-top: 30px;
-    padding-top: 25px;
-    border-top: 1px solid #eee;
+  .naro-faq-toggle {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--gray-500);
+    transition: transform 0.3s ease;
+  }
+
+  .naro-faq-item.open .naro-faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .naro-faq-answer {
+    display: none;
+    padding: 0 28px 24px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--gray-500);
+  }
+
+  .naro-faq-item.open .naro-faq-answer {
+    display: block;
+  }
+
+  /* ===== FINAL CTA SECTION ===== */
+  .naro-final-cta {
+    padding: 120px 20px;
+    background: var(--black);
+    color: var(--white);
+    text-align: center;
+  }
+
+  .naro-final-cta-title {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .naro-final-cta-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+  }
+
+  .naro-final-cta-button {
+    display: inline-block;
+    background: var(--white);
+    color: var(--black);
+    padding: 20px 60px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .naro-final-cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255,255,255,0.2);
+  }
+
+  /* ===== DETAILS SECTION ===== */
+  .naro-details-section {
+    padding: 80px 20px;
+    background: var(--white);
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .naro-details-inner {
+    max-width: 700px;
+    margin: 0 auto;
   }
 
   .naro-details-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--naro-black);
-    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.1em;
   }
 
   .naro-details-content {
-    font-size: 13px;
-    line-height: 1.8;
-    color: #555;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--gray-500);
+  }
+
+  .naro-details-content p {
+    margin-bottom: 16px;
   }
 </style>
 
-<div class="naro-product">
-  <div class="naro-product-container">
-    <!-- 画像ギャラリー -->
-    <div class="naro-gallery">
-      <div class="naro-main-image">
-        <img 
-          id="mainImage"
-          src="{{ product.featured_image | image_url: width: 1000 }}" 
-          alt="{{ product.featured_image.alt | escape }}"
-        >
+<div class="naro-lp">
+  
+  <!-- HERO SECTION -->
+  <section class="naro-hero">
+    <div class="naro-hero-inner">
+      <div class="naro-hero-image">
+        <span class="naro-hero-badge">Before / After</span>
+        <img src="{{ 'naro-before-after.png' | file_url }}" alt="naro Before After">
       </div>
-      
-      {% if product.images.size > 1 %}
-        <div class="naro-thumbnails">
-          {% for image in product.images %}
-            <div 
-              class="naro-thumbnail {% if forloop.first %}active{% endif %}"
-              onclick="changeImage('{{ image | image_url: width: 1000 }}', this)"
-            >
-              <img 
-                src="{{ image | image_url: width: 200 }}" 
-                alt="{{ image.alt | escape }}"
-              >
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+      <div class="naro-hero-content">
+        <p class="naro-hero-brand">naro</p>
+        <h1 class="naro-hero-title">
+          レギンスの下、<br>
+          <strong>気になっていませんか？</strong>
+        </h1>
+        <p class="naro-hero-subtitle">
+          ヨガやジムでレギンスを履くとき、<br>
+          フロントラインが気になって集中できない。<br>
+          そんな悩みを、naroが解決します。
+        </p>
+        <p class="naro-hero-price">¥3,990 <small>税込</small></p>
+        <a href="#product" class="naro-hero-cta">商品を見る</a>
+      </div>
     </div>
+  </section>
 
-    <!-- 商品情報 -->
-    <div class="naro-product-info">
-      <p class="naro-brand">naro</p>
-      <h1 class="naro-title">{{ product.title }}</h1>
-      <p class="naro-price" id="product-price">¥{{ product.selected_or_first_available_variant.price | money_without_currency | remove: '.00' }}</p>
-      <p class="naro-price-per-item" id="price-per-item"></p>
+  <!-- PROBLEM SECTION -->
+  <section class="naro-problem">
+    <div class="naro-section-inner">
+      <p class="naro-section-label animate-on-scroll">Problem</p>
+      <h2 class="naro-section-title animate-on-scroll">こんな経験、ありませんか？</h2>
+      <div class="naro-problem-list">
+        <div class="naro-problem-item animate-on-scroll">
+          <div class="naro-problem-icon">😰</div>
+          <div class="naro-problem-text">
+            <strong>フロントラインが気になる</strong>
+            レギンスを履くと、前の部分のラインがくっきり。周りの目が気になって、ポーズに集中できない。
+          </div>
+        </div>
+        <div class="naro-problem-item animate-on-scroll">
+          <div class="naro-problem-icon">👀</div>
+          <div class="naro-problem-text">
+            <strong>下着のラインが透ける</strong>
+            普通の下着だとラインが響いてしまう。かといってノーパンは衛生的に気になる。
+          </div>
+        </div>
+        <div class="naro-problem-item animate-on-scroll">
+          <div class="naro-problem-icon">😓</div>
+          <div class="naro-problem-text">
+            <strong>動くとズレて不快</strong>
+            運動中に下着がズレて、何度も直すのがストレス。もっと快適に動きたい。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <div class="naro-description">
-        {{ product.description }}
+  <!-- SOLUTION SECTION -->
+  <section class="naro-solution">
+    <div class="naro-solution-inner">
+      <div class="naro-solution-image animate-on-scroll">
+        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}">
+      </div>
+      <div class="naro-solution-content animate-on-scroll">
+        <p class="naro-section-label">Solution</p>
+        <h2 class="naro-section-title">naroが、すべて解決します</h2>
+        <p class="naro-solution-text">
+          独自のフラットフロント構造で、気になるラインを自然にカバー。ソングタイプだから、ヒップラインも響きません。これで、もう何も気にせずトレーニングに集中できます。
+        </p>
+        <div class="naro-solution-features">
+          <div class="naro-solution-feature">
+            <span class="naro-solution-feature-icon">✓</span>
+            フロントラインをカバー
+          </div>
+          <div class="naro-solution-feature">
+            <span class="naro-solution-feature-icon">✓</span>
+            ヒップラインに響かない
+          </div>
+          <div class="naro-solution-feature">
+            <span class="naro-solution-feature-icon">✓</span>
+            ズレにくい設計
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="naro-features">
+    <div class="naro-section-inner">
+      <p class="naro-section-label animate-on-scroll">Features</p>
+      <h2 class="naro-section-title animate-on-scroll">3つの特徴</h2>
+    </div>
+    <div class="naro-features-grid">
+      <div class="naro-feature-card animate-on-scroll">
+        <div class="naro-feature-icon">◎</div>
+        <h3 class="naro-feature-title">フラットフロント構造</h3>
+        <p class="naro-feature-desc">縫い目のないフラットな設計で、フロントラインをしっかりカバー。レギンス越しでも安心。</p>
+      </div>
+      <div class="naro-feature-card animate-on-scroll">
+        <div class="naro-feature-icon">◇</div>
+        <h3 class="naro-feature-title">ソングタイプ</h3>
+        <p class="naro-feature-desc">バックはソング（Tバック）タイプ。ヒップラインに響かず、美しいシルエットをキープ。</p>
+      </div>
+      <div class="naro-feature-card animate-on-scroll">
+        <div class="naro-feature-icon">○</div>
+        <h3 class="naro-feature-title">快適な素材</h3>
+        <p class="naro-feature-desc">薄手で軽やかな素材を使用。長時間の着用でも快適で、運動中もストレスフリー。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENES SECTION -->
+  <section class="naro-scenes">
+    <div class="naro-section-inner">
+      <p class="naro-section-label animate-on-scroll">Scenes</p>
+      <h2 class="naro-section-title animate-on-scroll">こんなシーンで活躍</h2>
+    </div>
+    <div class="naro-scenes-grid">
+      <div class="naro-scene-card animate-on-scroll">
+        <div class="naro-scene-emoji">🧘‍♀️</div>
+        <h3 class="naro-scene-title">ヨガ</h3>
+        <p class="naro-scene-desc">どんなポーズでもラインを気にせず集中できる</p>
+      </div>
+      <div class="naro-scene-card animate-on-scroll">
+        <div class="naro-scene-emoji">🏋️‍♀️</div>
+        <h3 class="naro-scene-title">ジム・筋トレ</h3>
+        <p class="naro-scene-desc">マシンやフリーウェイトも自信を持ってトレーニング</p>
+      </div>
+      <div class="naro-scene-card animate-on-scroll">
+        <div class="naro-scene-emoji">🏃‍♀️</div>
+        <h3 class="naro-scene-title">ランニング</h3>
+        <p class="naro-scene-desc">ズレにくく、長時間の運動も快適</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT SECTION -->
+  <section class="naro-product-section" id="product">
+    <div class="naro-product-container">
+      <!-- 画像ギャラリー -->
+      <div class="naro-gallery">
+        <div class="naro-main-image">
+          <img 
+            id="mainImage"
+            src="{{ product.featured_image | image_url: width: 1000 }}" 
+            alt="{{ product.featured_image.alt | escape }}"
+          >
+        </div>
+        
+        {% if product.images.size > 1 %}
+          <div class="naro-thumbnails">
+            {% for image in product.images %}
+              <div 
+                class="naro-thumbnail {% if forloop.first %}active{% endif %}"
+                onclick="changeImage('{{ image | image_url: width: 1000 }}', this)"
+              >
+                <img 
+                  src="{{ image | image_url: width: 200 }}" 
+                  alt="{{ image.alt | escape }}"
+                >
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
-      <!-- バリアント選択 -->
-      {% if product.has_only_default_variant == false %}
-        <form action="/cart/add" method="post" id="product-form">
+      <!-- 商品情報 -->
+      <div class="naro-product-info">
+        <p class="naro-product-brand">naro</p>
+        <h2 class="naro-product-title">{{ product.title }}</h2>
+        <p class="naro-product-price" id="product-price">¥{{ product.price | money_without_currency | remove: ',' }}</p>
+        <p class="naro-price-per-item" id="price-per-item"></p>
+
+        <form action="/cart/add" method="post">
           {% for option in product.options_with_values %}
-            <div class="naro-variants">
-              <label class="naro-variant-label">{{ option.name }}</label>
+            <div class="naro-option-group">
+              <span class="naro-option-label">{{ option.name }}</span>
               <div class="naro-color-options">
                 {% for value in option.values %}
-                  {% if option.name == 'セット' %}
+                  {% if option.name == 'セット' or option.name == 'set' %}
                     <label class="naro-set-option {% if forloop.first %}selected{% endif %}">
                       <input 
                         type="radio" 
@@ -372,10 +991,12 @@
                         {% if forloop.first %}checked{% endif %}
                         onchange="updateVariant()"
                       >
-                      {{ value }}
-                      {% if value == '2枚セット' %}<span class="set-discount">12% OFF</span>{% endif %}
-                      {% if value == '3枚セット' %}<span class="set-discount">25% OFF</span>{% endif %}
-                      <span class="set-price">
+                      <span class="naro-set-name">
+                        {{ value }}
+                        {% if value == '2枚セット' %}<span class="naro-set-badge">12% OFF</span>{% endif %}
+                        {% if value == '3枚セット' %}<span class="naro-set-badge">25% OFF</span>{% endif %}
+                      </span>
+                      <span class="naro-set-price">
                         {% if value == '1枚' %}¥3,990{% endif %}
                         {% if value == '2枚セット' %}¥6,980{% endif %}
                         {% if value == '3枚セット' %}¥8,970{% endif %}
@@ -408,81 +1029,126 @@
             {% endif %}
           </button>
         </form>
-      {% else %}
-        <form action="/cart/add" method="post">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="naro-add-to-cart" onclick="trackAddToCart()" {% unless product.available %}disabled{% endunless %}>
-            {% if product.available %}
-              カートに追加
-            {% else %}
-              売り切れ
-            {% endif %}
-          </button>
-        </form>
-      {% endif %}
 
-      <!-- 特典リスト -->
-      <div class="naro-benefits">
-        <div class="naro-benefit">
-          <span class="naro-benefit-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-            </svg>
-          </span>
-          <span>5,000円以上のご注文で送料無料</span>
-        </div>
-        <div class="naro-benefit">
-          <span class="naro-benefit-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span>2-3営業日以内にお届け</span>
-        </div>
-        <div class="naro-benefit">
-          <span class="naro-benefit-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span>30日間返品保証</span>
-        </div>
-      </div>
-
-      <!-- 素材・お手入れ -->
-      <div class="naro-details">
-        <p class="naro-details-title">素材・お手入れ</p>
-        <div class="naro-details-content">
-          <p>素材: ナイロン76%、スパンデックス24%</p>
-          <p>お手入れ: 30℃以下で手洗いまたは洗濯機（ネット使用推奨）。漂白剤・乾燥機の使用は避けてください。</p>
+        <div class="naro-benefits">
+          <div class="naro-benefit">
+            <span class="naro-benefit-icon">✓</span>
+            2〜3営業日で発送
+          </div>
+          <div class="naro-benefit">
+            <span class="naro-benefit-icon">✓</span>
+            30日間返品保証
+          </div>
+          <div class="naro-benefit">
+            <span class="naro-benefit-icon">✓</span>
+            ¥5,000以上で送料無料
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="naro-faq">
+    <div class="naro-section-inner">
+      <p class="naro-section-label animate-on-scroll">FAQ</p>
+      <h2 class="naro-section-title animate-on-scroll">よくある質問</h2>
+    </div>
+    <div class="naro-faq-list">
+      <div class="naro-faq-item">
+        <div class="naro-faq-question" onclick="toggleFaq(this)">
+          サイズの選び方は？
+          <span class="naro-faq-toggle">+</span>
+        </div>
+        <div class="naro-faq-answer">
+          普段お使いの下着と同じサイズをお選びください。S/M/Lの3サイズ展開です。迷われた場合は、ワンサイズ大きめをおすすめします。
+        </div>
+      </div>
+      <div class="naro-faq-item">
+        <div class="naro-faq-question" onclick="toggleFaq(this)">
+          洗濯方法は？
+          <span class="naro-faq-toggle">+</span>
+        </div>
+        <div class="naro-faq-answer">
+          洗濯ネットに入れて、洗濯機で洗えます。乾燥機のご使用はお控えください。長くお使いいただくために、手洗いをおすすめします。
+        </div>
+      </div>
+      <div class="naro-faq-item">
+        <div class="naro-faq-question" onclick="toggleFaq(this)">
+          返品・交換はできますか？
+          <span class="naro-faq-toggle">+</span>
+        </div>
+        <div class="naro-faq-answer">
+          未使用・未開封の場合、商品到着から30日以内であれば返品・交換を承ります。サイズが合わない場合もお気軽にご連絡ください。
+        </div>
+      </div>
+      <div class="naro-faq-item">
+        <div class="naro-faq-question" onclick="toggleFaq(this)">
+          配送にはどれくらいかかりますか？
+          <span class="naro-faq-toggle">+</span>
+        </div>
+        <div class="naro-faq-answer">
+          ご注文から2〜3営業日で発送いたします。発送後、通常1〜3日でお届けします。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA SECTION -->
+  <section class="naro-final-cta">
+    <h2 class="naro-final-cta-title">もう、気にしない。</h2>
+    <p class="naro-final-cta-subtitle">naroで、自信を持ってトレーニングを。</p>
+    <a href="#product" class="naro-final-cta-button">今すぐ購入する</a>
+  </section>
+
+  <!-- DETAILS SECTION -->
+  <section class="naro-details-section">
+    <div class="naro-details-inner">
+      <h3 class="naro-details-title">商品詳細</h3>
+      <div class="naro-details-content">
+        <p><strong>素材</strong>：ナイロン85%、ポリウレタン15%</p>
+        <p><strong>サイズ</strong>：S / M / L</p>
+        <p><strong>カラー</strong>：ブラック / ベージュ</p>
+        <p><strong>生産国</strong>：中国</p>
+        <p>※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
+        <p>※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 <script>
-  // 画像切り替え
-  function changeImage(src, thumbnail) {
-    document.getElementById('mainImage').src = src;
-    
-    // アクティブ状態を更新
-    document.querySelectorAll('.naro-thumbnail').forEach(t => t.classList.remove('active'));
-    thumbnail.classList.add('active');
-  }
-
-  // カラーオプション選択
-  document.querySelectorAll('.naro-color-option, .naro-set-option').forEach(option => {
-    option.addEventListener('click', function() {
-      const siblings = this.parentElement.querySelectorAll('.naro-color-option, .naro-set-option');
-      siblings.forEach(s => s.classList.remove('selected'));
-      this.classList.add('selected');
+  // スクロールアニメーション
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
     });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => {
+    observer.observe(el);
   });
 
-  // バリアント更新と価格表示
+  // 画像切り替え
+  function changeImage(src, element) {
+    document.getElementById('mainImage').src = src;
+    document.querySelectorAll('.naro-thumbnail').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+  }
+
+  // FAQ開閉
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // バリアント更新
+  const productVariants = {{ product.variants | json }};
+
   function updateVariant() {
-    const productVariants = {{ product.variants | json }};
     const selectedOptions = [];
     
     document.querySelectorAll('.naro-color-options input:checked').forEach(input => {
@@ -498,11 +1164,9 @@
     if (selectedVariant) {
       document.getElementById('variant-id').value = selectedVariant.id;
       
-      // 価格を更新
       const price = selectedVariant.price / 100;
       document.getElementById('product-price').innerHTML = '¥' + price.toLocaleString();
       
-      // 1枚あたりの価格を計算
       const pricePerItem = document.getElementById('price-per-item');
       const setOption = selectedOptions.find(opt => opt.includes('枚'));
       
@@ -516,7 +1180,16 @@
         pricePerItem.innerHTML = '';
       }
       
-      // ボタンの状態を更新
+      // オプション選択状態の更新
+      document.querySelectorAll('.naro-color-option, .naro-set-option').forEach(label => {
+        const input = label.querySelector('input');
+        if (input && input.checked) {
+          label.classList.add('selected');
+        } else {
+          label.classList.remove('selected');
+        }
+      });
+      
       const btn = document.getElementById('add-to-cart-btn');
       if (selectedVariant.available) {
         btn.disabled = false;
@@ -528,14 +1201,8 @@
     }
   }
 
-  // 初期表示時に価格を更新
-  document.addEventListener('DOMContentLoaded', function() {
-    updateVariant();
-  });
-
   // Meta Pixel - Add to Cart イベント
   function trackAddToCart() {
-    const productVariants = {{ product.variants | json }};
     const selectedOptions = [];
     
     document.querySelectorAll('.naro-color-options input:checked').forEach(input => {
@@ -558,15 +1225,31 @@
       });
     }
   }
+
+  // 初期表示時に価格を更新
+  document.addEventListener('DOMContentLoaded', function() {
+    updateVariant();
+  });
+
+  // スムーズスクロール
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 </script>
 
 {% schema %}
 {
-  "name": "Product",
+  "name": "naro LP Product v4",
   "settings": [],
   "presets": [
     {
-      "name": "naro Product"
+      "name": "naro LP Product v4"
     }
   ]
 }
