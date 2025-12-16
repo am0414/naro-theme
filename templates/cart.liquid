@@ -3,14 +3,19 @@
   
   {% if cart.item_count > 0 %}
     {% for item in cart.items %}
-      <div style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee;">
-        <img src="{{ item.image | image_url: width: 100 }}" alt="{{ item.title }}" style="width: 100px; height: 100px; object-fit: cover;">
+      <div style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; align-items: center;">
+        <img src="{{ item.image | image_url: width: 100 }}" alt="{{ item.title }}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
         <div style="flex: 1;">
           <p style="font-weight: 500;">{{ item.product.title }}</p>
           <p style="color: #666; font-size: 14px;">{{ item.variant.title }}</p>
           <p style="margin-top: 10px;">¥{{ item.price | money_without_currency }}</p>
         </div>
-        <div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px;">
+            <a href="/cart/change?id={{ item.key }}&quantity={{ item.quantity | minus: 1 }}" style="padding: 8px 12px; color: #333; text-decoration: none; font-size: 18px;">−</a>
+            <span style="padding: 8px 12px; min-width: 20px; text-align: center;">{{ item.quantity }}</span>
+            <a href="/cart/change?id={{ item.key }}&quantity={{ item.quantity | plus: 1 }}" style="padding: 8px 12px; color: #333; text-decoration: none; font-size: 18px;">+</a>
+          </div>
           <a href="/cart/change?id={{ item.key }}&quantity=0" style="color: #999; font-size: 14px;">削除</a>
         </div>
       </div>
@@ -18,7 +23,7 @@
     
     <div style="margin-top: 30px; text-align: right;">
       <p style="font-size: 18px; margin-bottom: 20px;">合計: <strong>¥{{ cart.total_price | money_without_currency }}</strong></p>
-      <a href="/checkout" style="display: inline-block; background: #1a1a1a; color: #fff; padding: 15px 40px; border-radius: 6px;">購入手続きへ</a>
+      <a href="/checkout" style="display: inline-block; background: #1a1a1a; color: #fff; padding: 15px 40px; border-radius: 6px; text-decoration: none;">購入手続きへ</a>
     </div>
   {% else %}
     <p>カートは空です。</p>
