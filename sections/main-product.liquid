@@ -1,6 +1,6 @@
 {% comment %}
-  naro - LP風商品ページ v4
-  v1の配色 + ゴシック体 + スクロールアニメーション
+  naro - LP風商品ページ v6
+  シンプル構成：ヒーロー → 違い → 商品 → FAQ
 {% endcomment %}
 
 <style>
@@ -88,7 +88,7 @@
       margin-bottom: 12px;
     }
     .naro-hero-title {
-      font-size: 26px;
+      font-size: 24px;
       margin-bottom: 16px;
     }
     .naro-hero-subtitle {
@@ -96,11 +96,8 @@
       margin-bottom: 24px;
       line-height: 1.8;
     }
-    .naro-hero-subtitle br {
-      display: none;
-    }
     .naro-hero-price {
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: 20px;
     }
     .naro-hero-cta {
@@ -154,15 +151,10 @@
   }
 
   .naro-hero-title {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 300;
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 500;
     line-height: 1.4;
     margin-bottom: 24px;
-  }
-
-  .naro-hero-title strong {
-    font-weight: 600;
-    display: block;
   }
 
   .naro-hero-subtitle {
@@ -173,16 +165,41 @@
   }
 
   .naro-hero-price {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 500;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
-  .naro-hero-price small {
-    font-size: 14px;
-    font-weight: 400;
+  @media (max-width: 900px) {
+    .naro-hero-price {
+      justify-content: center;
+    }
+  }
+
+  .naro-hero-price-original {
+    font-size: 20px;
     color: var(--gray-500);
-    margin-left: 8px;
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+
+  .naro-hero-price-badge {
+    background: #e53935;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .naro-hero-price-note {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 24px;
   }
 
   .naro-hero-cta {
@@ -204,530 +221,164 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   }
 
-  /* ===== SECTION COMMON ===== */
-  .naro-section-inner {
+  /* ===== DIFFERENCE SECTION ===== */
+  .naro-difference {
+    padding: 100px 20px;
+    background: var(--black);
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
+    .naro-difference {
+      padding: 64px 16px;
+    }
+  }
+
+  .naro-difference-inner {
     max-width: 900px;
     margin: 0 auto;
   }
 
-  .naro-section-label {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--gray-500);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  .naro-section-title {
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 400;
-    text-align: center;
-    margin-bottom: 60px;
-    line-height: 1.5;
-  }
-
-  /* ===== PROBLEM SECTION ===== */
-  .naro-problem {
-    padding: 120px 20px;
-    background: var(--white);
-  }
-
-  @media (max-width: 768px) {
-    .naro-problem {
-      padding: 64px 16px;
-    }
-    .naro-section-title {
-      font-size: 22px;
-      margin-bottom: 40px;
-    }
-    .naro-section-label {
-      font-size: 11px;
-      margin-bottom: 12px;
-    }
-  }
-
-  /* ===== CAMEL TOE PROOF SECTION ===== */
-  .naro-ctp-section {
-    padding: 120px 20px;
-    background: var(--black);
-    color: var(--white);
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .naro-ctp-section {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-ctp-section .naro-section-label {
-    color: rgba(255,255,255,0.6);
-  }
-
-  .naro-ctp-title {
-    font-size: clamp(24px, 4vw, 36px);
+  .naro-difference-title {
+    font-size: clamp(22px, 4vw, 32px);
     font-weight: 500;
-    line-height: 1.5;
-    margin-bottom: 40px;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
-  @media (max-width: 768px) {
-    .naro-ctp-title {
-      font-size: 22px;
-      margin-bottom: 32px;
-    }
-    .naro-ctp-title br {
-      display: none;
-    }
-  }
-
-  .naro-ctp-content {
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 16px;
-    line-height: 2;
-    color: rgba(255,255,255,0.8);
-  }
-
-  @media (max-width: 768px) {
-    .naro-ctp-content {
-      font-size: 14px;
-      line-height: 1.9;
-    }
-  }
-
-  .naro-ctp-content p {
-    margin-bottom: 8px;
-  }
-
-  .naro-ctp-highlight {
-    margin-top: 24px;
-    font-weight: 600;
-    color: var(--white);
-    font-size: 18px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-ctp-highlight {
-      font-size: 16px;
-      margin-top: 20px;
-    }
-  }
-
-  .naro-problem-list {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-problem-list {
-      gap: 16px;
-    }
-  }
-
-  .naro-problem-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 28px 32px;
-    background: var(--cream);
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-problem-item {
-      padding: 20px;
-      gap: 16px;
-      border-radius: 10px;
-    }
-    .naro-problem-item:hover {
-      transform: none;
-    }
-  }
-
-  .naro-problem-item:hover {
-    transform: translateX(8px);
-  }
-
-  .naro-problem-icon {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    background: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gray-500);
-  }
-
-  @media (max-width: 768px) {
-    .naro-problem-icon {
-      width: 40px;
-      height: 40px;
-      font-size: 12px;
-    }
-  }
-
-  .naro-problem-text {
+  .naro-difference-subtitle {
     font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    margin-bottom: 48px;
     line-height: 1.8;
   }
 
-  .naro-problem-text strong {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-    font-size: 16px;
-  }
-
   @media (max-width: 768px) {
-    .naro-problem-text {
+    .naro-difference-subtitle {
       font-size: 14px;
-    }
-    .naro-problem-text strong {
-      font-size: 15px;
+      margin-bottom: 36px;
     }
   }
 
-  /* ===== SOLUTION SECTION ===== */
-  .naro-solution {
-    padding: 120px 20px;
-    background: var(--cream);
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-solution-inner {
-    max-width: 1100px;
-    margin: 0 auto;
+  .naro-difference-table {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  @media (max-width: 900px) {
-    .naro-solution-inner {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-inner {
-      gap: 32px;
-    }
-  }
-
-  .naro-solution-image {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .naro-solution-image img {
-    width: 100%;
+    gap: 2px;
+    background: rgba(255,255,255,0.1);
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
   }
 
-  @media (max-width: 768px) {
-    .naro-solution-image img {
-      border-radius: 10px;
-    }
-  }
-
-  .naro-solution-content .naro-section-label {
-    text-align: left;
-  }
-
-  .naro-solution-content .naro-section-title {
-    text-align: left;
-    margin-bottom: 24px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-content .naro-section-label {
-      text-align: center;
-    }
-    .naro-solution-content .naro-section-title {
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-  }
-
-  .naro-solution-text {
-    font-size: 16px;
-    line-height: 2;
-    color: var(--gray-500);
-    margin-bottom: 32px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-text {
-      font-size: 14px;
-      line-height: 1.9;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-  }
-
-  .naro-solution-features {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-features {
-      gap: 12px;
-    }
-  }
-
-  .naro-solution-feature {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 14px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-feature {
-      gap: 12px;
-      font-size: 13px;
-    }
-  }
-
-  .naro-solution-feature-icon {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--gray-200);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    background: var(--white);
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 768px) {
-    .naro-solution-feature-icon {
-      width: 32px;
-      height: 32px;
-      font-size: 11px;
-    }
-  }
-
-  /* ===== FEATURES SECTION ===== */
-  .naro-features {
-    padding: 120px 20px;
-    background: var(--white);
-  }
-
-  @media (max-width: 768px) {
-    .naro-features {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 768px) {
-    .naro-features-grid {
+  @media (max-width: 600px) {
+    .naro-difference-table {
       grid-template-columns: 1fr;
-      gap: 20px;
     }
   }
 
-  .naro-feature-card {
-    text-align: center;
-    padding: 40px 24px;
-    background: var(--cream);
-    border-radius: 16px;
-    transition: transform 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-feature-card {
-      padding: 28px 20px;
-      border-radius: 12px;
-    }
-    .naro-feature-card:hover {
-      transform: none;
-    }
-  }
-
-  .naro-feature-card:hover {
-    transform: translateY(-8px);
-  }
-
-  .naro-feature-icon {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 24px;
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    transition: all 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-feature-icon {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 16px;
-      font-size: 20px;
-    }
-  }
-
-  .naro-feature-card:hover .naro-feature-icon {
+  .naro-difference-column {
     background: var(--black);
-    border-color: var(--black);
-    color: var(--white);
-  }
-
-  .naro-feature-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 12px;
+    padding: 32px 24px;
   }
 
   @media (max-width: 768px) {
-    .naro-feature-title {
-      font-size: 16px;
-      margin-bottom: 8px;
+    .naro-difference-column {
+      padding: 24px 20px;
     }
   }
 
-  .naro-feature-desc {
-    font-size: 14px;
-    color: var(--gray-500);
-    line-height: 1.8;
-  }
-
-  @media (max-width: 768px) {
-    .naro-feature-desc {
-      font-size: 13px;
-      line-height: 1.7;
-    }
-  }
-
-  /* ===== SCENES SECTION ===== */
-  .naro-scenes {
-    padding: 120px 20px;
-    background: var(--cream);
-  }
-
-  @media (max-width: 768px) {
-    .naro-scenes {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-scenes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 768px) {
-    .naro-scenes-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-  }
-
-  .naro-scene-card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 40px 24px;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-scene-card {
-      padding: 28px 20px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      text-align: left;
-      gap: 16px;
-    }
-  }
-
-  .naro-scene-card:hover {
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  }
-
-  .naro-scene-icon {
+  .naro-difference-column-title {
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.1em;
-    color: var(--gray-500);
-    margin-bottom: 16px;
-    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
   }
 
-  @media (max-width: 768px) {
-    .naro-scene-icon {
-      font-size: 12px;
-      margin-bottom: 0;
-      flex-shrink: 0;
-      width: 48px;
-    }
+  .naro-difference-column.normal .naro-difference-column-title {
+    color: rgba(255,255,255,0.5);
   }
 
-  .naro-scene-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
+  .naro-difference-column.naro .naro-difference-column-title {
+    color: #4ade80;
   }
 
-  @media (max-width: 768px) {
-    .naro-scene-title {
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
+  .naro-difference-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .naro-scene-desc {
+  .naro-difference-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     font-size: 14px;
-    color: var(--gray-500);
+    line-height: 1.7;
+  }
+
+  .naro-difference-column.normal .naro-difference-item {
+    color: rgba(255,255,255,0.6);
+  }
+
+  .naro-difference-column.naro .naro-difference-item {
+    color: var(--white);
+  }
+
+  .naro-difference-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .naro-difference-column.normal .naro-difference-icon {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .naro-difference-column.naro .naro-difference-icon {
+    background: #4ade80;
+    color: var(--black);
+  }
+
+  .naro-difference-highlight {
+    margin-top: 40px;
+    padding: 24px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .naro-difference-highlight p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .naro-difference-highlight strong {
+    color: var(--white);
   }
 
   @media (max-width: 768px) {
-    .naro-scene-desc {
-      font-size: 13px;
+    .naro-difference-highlight {
+      padding: 20px;
+      margin-top: 32px;
+    }
+    .naro-difference-highlight p {
+      font-size: 14px;
     }
   }
 
   /* ===== PRODUCT SECTION ===== */
   .naro-product-section {
-    padding: 120px 20px;
+    padding: 100px 20px;
     background: var(--white);
   }
 
@@ -781,6 +432,8 @@
     overflow: hidden;
     background: var(--gray-100);
     border-radius: 12px;
+    position: relative;
+    cursor: zoom-in;
   }
 
   @media (max-width: 768px) {
@@ -793,6 +446,40 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .naro-zoom-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .naro-main-image:hover .naro-zoom-hint {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .naro-zoom-hint {
+      width: 36px;
+      height: 36px;
+      bottom: 10px;
+      right: 10px;
+    }
+    .naro-zoom-hint svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   .naro-thumbnails {
@@ -986,18 +673,6 @@
     display: none;
   }
 
-  .naro-set-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-set-options {
-      gap: 10px;
-    }
-  }
-
   .naro-set-option {
     display: flex;
     justify-content: space-between;
@@ -1008,6 +683,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     background: var(--white);
+    width: 100%;
+    margin-bottom: 10px;
   }
 
   @media (max-width: 768px) {
@@ -1271,44 +948,130 @@
     margin-top: 12px;
   }
 
-  /* ===== ZOOM HINT ===== */
-  .naro-main-image {
-    position: relative;
-    cursor: zoom-in;
-  }
-
-  .naro-zoom-hint {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--black);
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .naro-main-image:hover .naro-zoom-hint {
-    opacity: 1;
+  /* ===== FAQ SECTION ===== */
+  .naro-faq {
+    padding: 100px 20px;
+    background: var(--cream);
   }
 
   @media (max-width: 768px) {
-    .naro-zoom-hint {
-      width: 36px;
-      height: 36px;
-      bottom: 10px;
-      right: 10px;
+    .naro-faq {
+      padding: 64px 16px;
     }
-    .naro-zoom-hint svg {
-      width: 18px;
-      height: 18px;
+  }
+
+  .naro-section-label {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .naro-section-title {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .naro-section-title {
+      font-size: 20px;
+      margin-bottom: 32px;
     }
+    .naro-section-label {
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+  }
+
+  .naro-faq-list {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-faq-list {
+      gap: 12px;
+    }
+  }
+
+  .naro-faq-item {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .naro-faq-item {
+      border-radius: 10px;
+    }
+  }
+
+  .naro-faq-question {
+    padding: 24px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .naro-faq-question {
+      padding: 18px 20px;
+      font-size: 14px;
+    }
+  }
+
+  .naro-faq-question:hover {
+    background: var(--gray-100);
+  }
+
+  .naro-faq-toggle {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--gray-500);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-faq-toggle {
+      font-size: 20px;
+    }
+  }
+
+  .naro-faq-item.open .naro-faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .naro-faq-answer {
+    display: none;
+    padding: 0 28px 24px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--gray-500);
+  }
+
+  @media (max-width: 768px) {
+    .naro-faq-answer {
+      padding: 0 20px 18px;
+      font-size: 13px;
+    }
+  }
+
+  .naro-faq-item.open .naro-faq-answer {
+    display: block;
   }
 
   /* ===== LIGHTBOX ===== */
@@ -1416,170 +1179,6 @@
     }
   }
 
-  /* ===== FAQ SECTION ===== */
-  .naro-faq {
-    padding: 120px 20px;
-    background: var(--cream);
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-faq-list {
-    max-width: 700px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq-list {
-      gap: 12px;
-    }
-  }
-
-  .naro-faq-item {
-    background: var(--white);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq-item {
-      border-radius: 10px;
-    }
-  }
-
-  .naro-faq-question {
-    padding: 24px 28px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.2s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq-question {
-      padding: 18px 20px;
-      font-size: 14px;
-    }
-  }
-
-  .naro-faq-question:hover {
-    background: var(--gray-100);
-  }
-
-  .naro-faq-toggle {
-    font-size: 24px;
-    font-weight: 300;
-    color: var(--gray-500);
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-    margin-left: 12px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq-toggle {
-      font-size: 20px;
-    }
-  }
-
-  .naro-faq-item.open .naro-faq-toggle {
-    transform: rotate(45deg);
-  }
-
-  .naro-faq-answer {
-    display: none;
-    padding: 0 28px 24px;
-    font-size: 14px;
-    line-height: 1.9;
-    color: var(--gray-500);
-  }
-
-  @media (max-width: 768px) {
-    .naro-faq-answer {
-      padding: 0 20px 18px;
-      font-size: 13px;
-    }
-  }
-
-  .naro-faq-item.open .naro-faq-answer {
-    display: block;
-  }
-
-  /* ===== FINAL CTA SECTION ===== */
-  .naro-final-cta {
-    padding: 120px 20px;
-    background: var(--black);
-    color: var(--white);
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .naro-final-cta {
-      padding: 64px 16px;
-    }
-  }
-
-  .naro-final-cta-title {
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 400;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-final-cta-title {
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-  }
-
-  .naro-final-cta-subtitle {
-    font-size: 16px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 40px;
-  }
-
-  @media (max-width: 768px) {
-    .naro-final-cta-subtitle {
-      font-size: 14px;
-      margin-bottom: 32px;
-    }
-  }
-
-  .naro-final-cta-button {
-    display: inline-block;
-    background: var(--white);
-    color: var(--black);
-    padding: 20px 60px;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .naro-final-cta-button {
-      padding: 16px 48px;
-      font-size: 14px;
-      border-radius: 6px;
-    }
-  }
-
-  .naro-final-cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(255,255,255,0.2);
-  }
-
   /* ===== FIXED CTA BUTTON (MOBILE) ===== */
   .naro-fixed-cta {
     display: none;
@@ -1605,7 +1204,6 @@
       display: block;
     }
     
-    /* 固定CTAがある時、ページ下部に余白を追加 */
     .naro-lp {
       padding-bottom: 80px;
     }
@@ -1685,147 +1283,68 @@
       <div class="naro-hero-content">
         <p class="naro-hero-brand">naro</p>
         <h1 class="naro-hero-title">
-          レギンスの下、<br>
-          <strong>気になっていませんか？</strong>
+          「Camel Toe Proof」<br>ご存知ですか？
         </h1>
         <p class="naro-hero-subtitle">
-          ヨガやジムでレギンスを履くとき、<br>
-          股のラインが気になって集中できない。<br><br>
-          <strong>海外で当たり前の「Camel Toe Proof」設計。</strong><br>
-          naroが、日本に届けます。
+          レギンスの"あのライン"を防ぐインナー。<br>
+          海外では常識、日本初上陸。
         </p>
-        <p class="naro-hero-price">¥3,990 <small>税込</small></p>
+        <div class="naro-hero-price">
+          <span class="naro-hero-price-original">¥3,990</span>
+          <span>¥2,990</span>
+          <span class="naro-hero-price-badge">初回 ¥1,000 OFF</span>
+        </div>
+        <p class="naro-hero-price-note">※メール登録でクーポンGET</p>
         <a href="#product" class="naro-hero-cta">商品を見る</a>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM SECTION -->
-  <section class="naro-problem">
-    <div class="naro-section-inner">
-      <p class="naro-section-label animate-on-scroll">Problem</p>
-      <h2 class="naro-section-title animate-on-scroll">こんな経験、ありませんか？</h2>
-      <div class="naro-problem-list">
-        <div class="naro-problem-item animate-on-scroll">
-          <div class="naro-problem-icon">01</div>
-          <div class="naro-problem-text">
-            <strong>股のラインが気になる</strong>
-            レギンスを履くと、股の部分がくっきり。周りの目が気になって、ポーズに集中できない。
+  <!-- DIFFERENCE SECTION -->
+  <section class="naro-difference">
+    <div class="naro-difference-inner">
+      <h2 class="naro-difference-title animate-on-scroll">普通の下着と何が違う？</h2>
+      <p class="naro-difference-subtitle animate-on-scroll">naroは、レギンス専用に設計されたインナーです。</p>
+      
+      <div class="naro-difference-table animate-on-scroll">
+        <div class="naro-difference-column normal">
+          <div class="naro-difference-column-title">普通の下着</div>
+          <div class="naro-difference-list">
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">×</span>
+              <span>股のラインがくっきり出る</span>
+            </div>
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">×</span>
+              <span>ヒップラインが透けて見える</span>
+            </div>
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">×</span>
+              <span>動くとズレて不快</span>
+            </div>
           </div>
         </div>
-        <div class="naro-problem-item animate-on-scroll">
-          <div class="naro-problem-icon">02</div>
-          <div class="naro-problem-text">
-            <strong>下着のラインが透ける</strong>
-            普通の下着だとラインが響いてしまう。かといってノーパンは衛生的に気になる。
-          </div>
-        </div>
-        <div class="naro-problem-item animate-on-scroll">
-          <div class="naro-problem-icon">03</div>
-          <div class="naro-problem-text">
-            <strong>動くとズレて不快</strong>
-            運動中に下着がズレて、何度も直すのがストレス。もっと快適に動きたい。
+        <div class="naro-difference-column naro">
+          <div class="naro-difference-column-title">naro</div>
+          <div class="naro-difference-list">
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">✓</span>
+              <span>厚手のフラットフロント構造でカバー</span>
+            </div>
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">✓</span>
+              <span>ソングタイプで響かない</span>
+            </div>
+            <div class="naro-difference-item">
+              <span class="naro-difference-icon">✓</span>
+              <span>フィット設計でズレにくい</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- CAMEL TOE PROOF SECTION -->
-  <section class="naro-ctp-section">
-    <div class="naro-section-inner">
-      <p class="naro-section-label animate-on-scroll">What's Camel Toe Proof?</p>
-      <h2 class="naro-ctp-title animate-on-scroll">海外で常識の「Camel Toe Proof」、<br>ついに日本上陸。</h2>
-      <div class="naro-ctp-content animate-on-scroll">
-        <p>Camel Toe（キャメルトゥ）とは、レギンス着用時に股のラインがくっきり見えてしまう現象。</p>
-        <p>海外では、これを防ぐ下着が当たり前になっています。</p>
-        <p class="naro-ctp-highlight">naroは、この技術を日本向けに設計しました。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOLUTION SECTION -->
-  <section class="naro-solution">
-    <div class="naro-solution-inner">
-      <div class="naro-solution-image animate-on-scroll">
-        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}">
-      </div>
-      <div class="naro-solution-content animate-on-scroll">
-        <p class="naro-section-label">Solution</p>
-        <h2 class="naro-section-title">naroが、すべて解決します</h2>
-        <p class="naro-solution-text">
-          独自のフラットフロント構造で、気になるラインを自然にカバー。ソングタイプだから、ヒップラインも響きません。これで、もう何も気にせずトレーニングに集中できます。
-        </p>
-        <div class="naro-solution-features">
-          <div class="naro-solution-feature">
-            <span class="naro-solution-feature-icon">✓</span>
-            股のラインをカバー
-          </div>
-          <div class="naro-solution-feature">
-            <span class="naro-solution-feature-icon">✓</span>
-            ヒップラインに響かない
-          </div>
-          <div class="naro-solution-feature">
-            <span class="naro-solution-feature-icon">✓</span>
-            ズレにくい設計
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES SECTION -->
-  <section class="naro-features">
-    <div class="naro-section-inner">
-      <p class="naro-section-label animate-on-scroll">Features</p>
-      <h2 class="naro-section-title animate-on-scroll">3つの特徴</h2>
-    </div>
-    <div class="naro-features-grid">
-      <div class="naro-feature-card animate-on-scroll">
-        <div class="naro-feature-icon">◎</div>
-        <h3 class="naro-feature-title">フラットフロント構造</h3>
-        <p class="naro-feature-desc">フロント部分は厚めの生地を使用。気になる股のラインが出にくく、レギンス越しでも安心。</p>
-      </div>
-      <div class="naro-feature-card animate-on-scroll">
-        <div class="naro-feature-icon">◇</div>
-        <h3 class="naro-feature-title">ソングタイプ</h3>
-        <p class="naro-feature-desc">バックはソング（Tバック）タイプ。ヒップラインに響かず、美しいシルエットをキープ。</p>
-      </div>
-      <div class="naro-feature-card animate-on-scroll">
-        <div class="naro-feature-icon">○</div>
-        <h3 class="naro-feature-title">快適な素材</h3>
-        <p class="naro-feature-desc">薄手で軽やかな素材を使用。長時間の着用でも快適で、運動中もストレスフリー。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCENES SECTION -->
-  <section class="naro-scenes">
-    <div class="naro-section-inner">
-      <p class="naro-section-label animate-on-scroll">Scenes</p>
-      <h2 class="naro-section-title animate-on-scroll">こんなシーンで活躍</h2>
-    </div>
-    <div class="naro-scenes-grid">
-      <div class="naro-scene-card animate-on-scroll">
-        <div class="naro-scene-icon">Yoga</div>
-        <div class="naro-scene-content">
-          <h3 class="naro-scene-title">ヨガ</h3>
-          <p class="naro-scene-desc">どんなポーズでもラインを気にせず集中できる</p>
-        </div>
-      </div>
-      <div class="naro-scene-card animate-on-scroll">
-        <div class="naro-scene-icon">Gym</div>
-        <div class="naro-scene-content">
-          <h3 class="naro-scene-title">ジム・筋トレ</h3>
-          <p class="naro-scene-desc">マシンやフリーウェイトも自信を持ってトレーニング</p>
-        </div>
-      </div>
-      <div class="naro-scene-card animate-on-scroll">
-        <div class="naro-scene-icon">Run</div>
-        <div class="naro-scene-content">
-          <h3 class="naro-scene-title">ランニング</h3>
-          <p class="naro-scene-desc">ズレにくく、長時間の運動も快適</p>
-        </div>
+      <div class="naro-difference-highlight animate-on-scroll">
+        <p>naroのフロント部分は<strong>少し厚手の生地</strong>を使用。<br>だから、レギンス越しでもラインが出にくい。</p>
       </div>
     </div>
   </section>
@@ -2051,15 +1570,6 @@
     </div>
   </section>
 
-  <!-- FINAL CTA SECTION -->
-  <section class="naro-final-cta">
-    <div class="naro-section-inner" style="text-align: center;">
-      <h2 class="naro-final-cta-title">もう、気にしない。</h2>
-      <p class="naro-final-cta-subtitle">naroで、自信を持ってトレーニングを。</p>
-      <a href="#product" class="naro-final-cta-button">今すぐ購入する</a>
-    </div>
-  </section>
-
   <!-- LIGHTBOX -->
   <div class="naro-lightbox" id="lightbox">
     <button class="naro-lightbox-close" onclick="closeLightbox()">&times;</button>
@@ -2114,7 +1624,6 @@
 
   function openLightbox() {
     const mainImageSrc = document.getElementById('mainImage').src;
-    // 現在表示中の画像のインデックスを取得
     currentImageIndex = productImages.findIndex(img => mainImageSrc.includes(img.split('?')[0].split('/').pop().split('.')[0]));
     if (currentImageIndex === -1) currentImageIndex = 0;
     
@@ -2136,7 +1645,6 @@
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
     
-    // ボタンを戻す
     counter.style.display = '';
     prevBtn.style.display = '';
     nextBtn.style.display = '';
@@ -2166,15 +1674,12 @@
     document.getElementById('lightboxCounter').textContent = (currentImageIndex + 1) + ' / ' + productImages.length;
   }
 
-  // ライトボックス背景クリックで閉じる
   document.getElementById('lightbox').addEventListener('click', function(e) {
-    // ボタンや画像以外の場所（背景）をクリックした場合のみ閉じる
     if (e.target === this) {
       closeLightbox();
     }
   });
 
-  // キーボード操作
   document.addEventListener('keydown', function(e) {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox.classList.contains('active')) return;
@@ -2184,7 +1689,6 @@
     if (e.key === 'ArrowRight') nextImage(null);
   });
 
-  // ヒーロー画像のライトボックス
   function openHeroLightbox() {
     const heroImage = document.querySelector('.naro-hero-image img');
     const lightbox = document.getElementById('lightbox');
@@ -2249,7 +1753,6 @@
         pricePerItem.innerHTML = '';
       }
       
-      // オプション選択状態の更新
       document.querySelectorAll('.naro-color-option, .naro-set-option').forEach(label => {
         const input = label.querySelector('input');
         if (input && input.checked) {
@@ -2324,7 +1827,6 @@
       const productTop = productSection ? productSection.getBoundingClientRect().top : Infinity;
       const windowHeight = window.innerHeight;
       
-      // ヒーローを過ぎたら表示、商品セクションに到達したら非表示
       if (heroBottom < 0 && productTop > windowHeight * 0.5) {
         fixedCta.classList.add('visible');
       } else {
@@ -2332,7 +1834,6 @@
       }
     }
 
-    // スクロールイベント（パフォーマンス最適化）
     let ticking = false;
     window.addEventListener('scroll', function() {
       if (!ticking) {
@@ -2344,18 +1845,17 @@
       }
     });
 
-    // 初期チェック
     checkScroll();
   })();
 </script>
 
 {% schema %}
 {
-  "name": "naro LP Product v4",
+  "name": "naro LP Product v6",
   "settings": [],
   "presets": [
     {
-      "name": "naro LP Product v4"
+      "name": "naro LP Product v6"
     }
   ]
 }
