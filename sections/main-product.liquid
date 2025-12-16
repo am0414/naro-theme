@@ -1976,11 +1976,11 @@
   </section>
 
   <!-- LIGHTBOX -->
-  <div class="naro-lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <button class="naro-lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <div class="naro-lightbox" id="lightbox">
+    <button class="naro-lightbox-close" onclick="closeLightbox()">&times;</button>
     <button class="naro-lightbox-prev" onclick="prevImage(event)">&#10094;</button>
     <button class="naro-lightbox-next" onclick="nextImage(event)">&#10095;</button>
-    <img class="naro-lightbox-image" id="lightboxImage" src="" alt="">
+    <img class="naro-lightbox-image" id="lightboxImage" src="" alt="" onclick="event.stopPropagation()">
     <div class="naro-lightbox-counter" id="lightboxCounter"></div>
   </div>
 
@@ -2030,32 +2030,36 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function closeLightbox(event) {
-    if (event.target === event.currentTarget || event.target.classList.contains('naro-lightbox-close')) {
-      const lightbox = document.getElementById('lightbox');
-      const counter = document.getElementById('lightboxCounter');
-      const prevBtn = document.querySelector('.naro-lightbox-prev');
-      const nextBtn = document.querySelector('.naro-lightbox-next');
-      
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-      
-      // ボタンを戻す
-      counter.style.display = '';
-      prevBtn.style.display = '';
-      nextBtn.style.display = '';
-    }
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const counter = document.getElementById('lightboxCounter');
+    const prevBtn = document.querySelector('.naro-lightbox-prev');
+    const nextBtn = document.querySelector('.naro-lightbox-next');
+    
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // ボタンを戻す
+    counter.style.display = '';
+    prevBtn.style.display = '';
+    nextBtn.style.display = '';
   }
 
   function prevImage(event) {
-    event.stopPropagation();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
     document.getElementById('lightboxImage').src = productImages[currentImageIndex];
     updateCounter();
   }
 
   function nextImage(event) {
-    event.stopPropagation();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     currentImageIndex = (currentImageIndex + 1) % productImages.length;
     document.getElementById('lightboxImage').src = productImages[currentImageIndex];
     updateCounter();
@@ -2065,14 +2069,22 @@
     document.getElementById('lightboxCounter').textContent = (currentImageIndex + 1) + ' / ' + productImages.length;
   }
 
+  // ライトボックス背景クリックで閉じる
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    // ボタンや画像以外の場所（背景）をクリックした場合のみ閉じる
+    if (e.target === this) {
+      closeLightbox();
+    }
+  });
+
   // キーボード操作
   document.addEventListener('keydown', function(e) {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox.classList.contains('active')) return;
     
-    if (e.key === 'Escape') closeLightbox({target: lightbox, currentTarget: lightbox});
-    if (e.key === 'ArrowLeft') prevImage({stopPropagation: () => {}});
-    if (e.key === 'ArrowRight') nextImage({stopPropagation: () => {}});
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage(null);
+    if (e.key === 'ArrowRight') nextImage(null);
   });
 
   // ヒーロー画像のライトボックス
