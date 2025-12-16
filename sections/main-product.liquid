@@ -1146,6 +1146,50 @@
     }
   }
 
+  /* ===== SIZE CHART ===== */
+  .naro-size-chart {
+    margin: 20px 0;
+  }
+
+  .naro-size-chart p {
+    margin-bottom: 12px;
+  }
+
+  .naro-size-chart table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-size-chart table {
+      font-size: 12px;
+    }
+  }
+
+  .naro-size-chart th,
+  .naro-size-chart td {
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .naro-size-chart th {
+    font-weight: 600;
+    color: var(--black);
+    background: var(--gray-100);
+  }
+
+  .naro-size-chart td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .naro-size-chart tbody tr:last-child td {
+    border-bottom: none;
+  }
+
   /* ===== FAQ SECTION ===== */
   .naro-faq {
     padding: 120px 20px;
@@ -1328,7 +1372,7 @@
         </h1>
         <p class="naro-hero-subtitle">
           ヨガやジムでレギンスを履くとき、<br>
-          フロントラインが気になって集中できない。<br>
+          股のラインが気になって集中できない。<br>
           そんな悩みを、naroが解決します。
         </p>
         <p class="naro-hero-price">¥3,990 <small>税込</small></p>
@@ -1346,8 +1390,8 @@
         <div class="naro-problem-item animate-on-scroll">
           <div class="naro-problem-icon">01</div>
           <div class="naro-problem-text">
-            <strong>フロントラインが気になる</strong>
-            レギンスを履くと、前の部分のラインがくっきり。周りの目が気になって、ポーズに集中できない。
+            <strong>股のラインが気になる</strong>
+            レギンスを履くと、股の部分がくっきり。周りの目が気になって、ポーズに集中できない。
           </div>
         </div>
         <div class="naro-problem-item animate-on-scroll">
@@ -1383,7 +1427,7 @@
         <div class="naro-solution-features">
           <div class="naro-solution-feature">
             <span class="naro-solution-feature-icon">✓</span>
-            フロントラインをカバー
+            股のラインをカバー
           </div>
           <div class="naro-solution-feature">
             <span class="naro-solution-feature-icon">✓</span>
@@ -1408,7 +1452,7 @@
       <div class="naro-feature-card animate-on-scroll">
         <div class="naro-feature-icon">◎</div>
         <h3 class="naro-feature-title">フラットフロント構造</h3>
-        <p class="naro-feature-desc">フロント部分は厚めの生地を使用。気になるラインが出にくく、レギンス越しでも安心。</p>
+        <p class="naro-feature-desc">フロント部分は厚めの生地を使用。気になる股のラインが出にくく、レギンス越しでも安心。</p>
       </div>
       <div class="naro-feature-card animate-on-scroll">
         <div class="naro-feature-icon">◇</div>
@@ -1569,9 +1613,44 @@
             </div>
             <div class="naro-details-body">
               <p><strong>素材</strong>：ナイロン85%、ポリウレタン15%</p>
-              <p><strong>サイズ</strong>：S / M / L</p>
               <p><strong>カラー</strong>：ブラック / ベージュ</p>
               <p><strong>生産国</strong>：中国</p>
+              
+              <!-- サイズチャート -->
+              <div class="naro-size-chart">
+                <p><strong>サイズ表（cm）</strong></p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>S</th>
+                      <th>M</th>
+                      <th>L</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ウエスト</td>
+                      <td>29</td>
+                      <td>31</td>
+                      <td>33</td>
+                    </tr>
+                    <tr>
+                      <td>股上</td>
+                      <td>18</td>
+                      <td>19</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>サイド丈</td>
+                      <td>35</td>
+                      <td>35</td>
+                      <td>35</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <p class="naro-details-note">※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
               <p class="naro-details-note">※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
             </div>
