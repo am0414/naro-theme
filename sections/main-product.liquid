@@ -1190,6 +1190,12 @@
     border-bottom: none;
   }
 
+  .naro-size-chart .naro-size-note {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 12px;
+  }
+
   /* ===== FAQ SECTION ===== */
   .naro-faq {
     padding: 120px 20px;
@@ -1615,10 +1621,18 @@
               <p><strong>素材</strong>：ナイロン85%、ポリウレタン15%</p>
               <p><strong>カラー</strong>：ブラック / ベージュ</p>
               <p><strong>生産国</strong>：中国</p>
-              
-              <!-- サイズチャート -->
+              <p class="naro-details-note">※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
+              <p class="naro-details-note">※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
+            </div>
+          </div>
+
+          <div class="naro-details-accordion">
+            <div class="naro-details-header" onclick="toggleDetails(this)">
+              <span>サイズ</span>
+              <span class="naro-details-toggle">+</span>
+            </div>
+            <div class="naro-details-body">
               <div class="naro-size-chart">
-                <p><strong>サイズ表（cm）</strong></p>
                 <table>
                   <thead>
                     <tr>
@@ -1649,10 +1663,8 @@
                     </tr>
                   </tbody>
                 </table>
+                <p class="naro-size-note">※単位：cm</p>
               </div>
-
-              <p class="naro-details-note">※軽やかな薄手生地を使用しているため、縫い目が若干斜めになっていたり、多少の歪みが見られる場合がございます。着用には問題ございませんが、あらかじめご了承ください。</p>
-              <p class="naro-details-note">※モデル着用サイズ：L（ヒップ93cm、ウエスト63cm）</p>
             </div>
           </div>
         </div>
