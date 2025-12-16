@@ -112,134 +112,13 @@
 
   .naro-hero-image {
     position: relative;
+    cursor: zoom-in;
   }
 
-  /* ===== BEFORE/AFTER COMPARE SLIDER ===== */
-  .naro-compare-slider {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-    cursor: ew-resize;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .naro-compare-before,
-  .naro-compare-after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .naro-compare-before {
-    z-index: 2;
-    width: 50%;
-    overflow: hidden;
-  }
-
-  .naro-compare-after {
-    z-index: 1;
-  }
-
-  .naro-compare-before img,
-  .naro-compare-after img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-  }
-
-  .naro-compare-before img {
-    width: auto;
-    min-width: 100%;
-  }
-
-  .naro-compare-label {
+  .naro-hero-image > .naro-zoom-hint {
     position: absolute;
     bottom: 16px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    border-radius: 4px;
-  }
-
-  .naro-compare-label-before {
-    left: 16px;
-  }
-
-  .naro-compare-label-after {
     right: 16px;
-  }
-
-  .naro-compare-handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    cursor: ew-resize;
-  }
-
-  .naro-compare-handle-line {
-    width: 3px;
-    flex: 1;
-    background: white;
-    box-shadow: 0 0 8px rgba(0,0,0,0.3);
-  }
-
-  .naro-compare-handle-circle {
-    width: 44px;
-    height: 44px;
-    background: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    color: var(--black);
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 768px) {
-    .naro-compare-slider {
-      border-radius: 6px;
-    }
-    .naro-compare-label {
-      font-size: 11px;
-      padding: 5px 12px;
-      bottom: 12px;
-    }
-    .naro-compare-label-before {
-      left: 12px;
-    }
-    .naro-compare-label-after {
-      right: 12px;
-    }
-    .naro-compare-handle-circle {
-      width: 40px;
-      height: 40px;
-    }
-    .naro-compare-handle-circle svg {
-      width: 20px;
-      height: 20px;
-    }
   }
 
   .naro-hero-image img {
@@ -1639,26 +1518,15 @@
   <!-- HERO SECTION -->
   <section class="naro-hero">
     <div class="naro-hero-inner">
-      <div class="naro-hero-image">
-        <div class="naro-compare-slider" id="compareSlider">
-          <div class="naro-compare-before">
-            <img src="{{ 'naro-before.png' | file_url }}" alt="Before">
-            <span class="naro-compare-label naro-compare-label-before">Before</span>
-          </div>
-          <div class="naro-compare-after">
-            <img src="{{ 'naro-after.png' | file_url }}" alt="After">
-            <span class="naro-compare-label naro-compare-label-after">After</span>
-          </div>
-          <div class="naro-compare-handle" id="compareHandle">
-            <div class="naro-compare-handle-line"></div>
-            <div class="naro-compare-handle-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 8L22 12L18 16"></path>
-                <path d="M6 8L2 12L6 16"></path>
-              </svg>
-            </div>
-            <div class="naro-compare-handle-line"></div>
-          </div>
+      <div class="naro-hero-image" onclick="openHeroLightbox()">
+        <span class="naro-hero-badge">Before / After</span>
+        <img src="{{ 'naro-before-after.png' | file_url }}" alt="naro Before After">
+        <div class="naro-zoom-hint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+            <path d="M11 8v6M8 11h6"></path>
+          </svg>
         </div>
       </div>
       <div class="naro-hero-content">
@@ -2140,71 +2008,6 @@
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
-
-  // Before/After スライダー
-  (function() {
-    const slider = document.getElementById('compareSlider');
-    if (!slider) return;
-
-    const handle = document.getElementById('compareHandle');
-    const beforeDiv = slider.querySelector('.naro-compare-before');
-    let isDragging = false;
-
-    function getPosition(e) {
-      const rect = slider.getBoundingClientRect();
-      let x;
-      if (e.type.includes('touch')) {
-        x = e.touches[0].clientX - rect.left;
-      } else {
-        x = e.clientX - rect.left;
-      }
-      return Math.max(0, Math.min(x, rect.width));
-    }
-
-    function updateSlider(x) {
-      const rect = slider.getBoundingClientRect();
-      const percent = (x / rect.width) * 100;
-      beforeDiv.style.width = percent + '%';
-      handle.style.left = percent + '%';
-    }
-
-    function startDrag(e) {
-      e.preventDefault();
-      isDragging = true;
-      slider.classList.add('dragging');
-    }
-
-    function doDrag(e) {
-      if (!isDragging) return;
-      const x = getPosition(e);
-      updateSlider(x);
-    }
-
-    function endDrag() {
-      isDragging = false;
-      slider.classList.remove('dragging');
-    }
-
-    // Mouse events
-    handle.addEventListener('mousedown', startDrag);
-    slider.addEventListener('mousedown', function(e) {
-      startDrag(e);
-      const x = getPosition(e);
-      updateSlider(x);
-    });
-    document.addEventListener('mousemove', doDrag);
-    document.addEventListener('mouseup', endDrag);
-
-    // Touch events
-    handle.addEventListener('touchstart', startDrag, { passive: false });
-    slider.addEventListener('touchstart', function(e) {
-      startDrag(e);
-      const x = getPosition(e);
-      updateSlider(x);
-    }, { passive: false });
-    document.addEventListener('touchmove', doDrag, { passive: true });
-    document.addEventListener('touchend', endDrag);
-  })();
 
   // FAQ開閉
   function toggleFaq(element) {
