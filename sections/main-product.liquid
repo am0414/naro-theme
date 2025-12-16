@@ -114,6 +114,134 @@
     position: relative;
   }
 
+  /* ===== BEFORE/AFTER COMPARE SLIDER ===== */
+  .naro-compare-slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .naro-compare-before,
+  .naro-compare-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .naro-compare-before {
+    z-index: 2;
+    width: 50%;
+    overflow: hidden;
+  }
+
+  .naro-compare-after {
+    z-index: 1;
+  }
+
+  .naro-compare-before img,
+  .naro-compare-after img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .naro-compare-before img {
+    width: auto;
+    min-width: 100%;
+  }
+
+  .naro-compare-label {
+    position: absolute;
+    bottom: 16px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+  }
+
+  .naro-compare-label-before {
+    left: 16px;
+  }
+
+  .naro-compare-label-after {
+    right: 16px;
+  }
+
+  .naro-compare-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: ew-resize;
+  }
+
+  .naro-compare-handle-line {
+    width: 3px;
+    flex: 1;
+    background: white;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  }
+
+  .naro-compare-handle-circle {
+    width: 44px;
+    height: 44px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    color: var(--black);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .naro-compare-slider {
+      border-radius: 6px;
+    }
+    .naro-compare-label {
+      font-size: 11px;
+      padding: 5px 12px;
+      bottom: 12px;
+    }
+    .naro-compare-label-before {
+      left: 12px;
+    }
+    .naro-compare-label-after {
+      right: 12px;
+    }
+    .naro-compare-handle-circle {
+      width: 40px;
+      height: 40px;
+    }
+    .naro-compare-handle-circle svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   .naro-hero-image img {
     width: 100%;
     border-radius: 8px;
@@ -1196,6 +1324,151 @@
     margin-top: 12px;
   }
 
+  /* ===== ZOOM HINT ===== */
+  .naro-main-image {
+    position: relative;
+    cursor: zoom-in;
+  }
+
+  .naro-zoom-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .naro-main-image:hover .naro-zoom-hint {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .naro-zoom-hint {
+      width: 36px;
+      height: 36px;
+      bottom: 10px;
+      right: 10px;
+    }
+    .naro-zoom-hint svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  /* ===== LIGHTBOX ===== */
+  .naro-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .naro-lightbox.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .naro-lightbox-image {
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .naro-lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .naro-lightbox-close:hover {
+    opacity: 1;
+  }
+
+  .naro-lightbox-prev,
+  .naro-lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 16px 20px;
+    border-radius: 4px;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+  }
+
+  .naro-lightbox-prev:hover,
+  .naro-lightbox-next:hover {
+    opacity: 1;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .naro-lightbox-prev {
+    left: 20px;
+  }
+
+  .naro-lightbox-next {
+    right: 20px;
+  }
+
+  .naro-lightbox-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-lightbox-close {
+      top: 12px;
+      right: 16px;
+      font-size: 32px;
+    }
+    .naro-lightbox-prev,
+    .naro-lightbox-next {
+      padding: 12px 16px;
+      font-size: 20px;
+    }
+    .naro-lightbox-prev {
+      left: 10px;
+    }
+    .naro-lightbox-next {
+      right: 10px;
+    }
+  }
+
   /* ===== FAQ SECTION ===== */
   .naro-faq {
     padding: 120px 20px;
@@ -1367,8 +1640,26 @@
   <section class="naro-hero">
     <div class="naro-hero-inner">
       <div class="naro-hero-image">
-        <span class="naro-hero-badge">Before / After</span>
-        <img src="{{ 'naro-before-after.png' | file_url }}" alt="naro Before After">
+        <div class="naro-compare-slider" id="compareSlider">
+          <div class="naro-compare-before">
+            <img src="{{ 'naro-before.jpg' | file_url }}" alt="Before">
+            <span class="naro-compare-label naro-compare-label-before">Before</span>
+          </div>
+          <div class="naro-compare-after">
+            <img src="{{ 'naro-after.jpg' | file_url }}" alt="After">
+            <span class="naro-compare-label naro-compare-label-after">After</span>
+          </div>
+          <div class="naro-compare-handle" id="compareHandle">
+            <div class="naro-compare-handle-line"></div>
+            <div class="naro-compare-handle-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8L22 12L18 16"></path>
+                <path d="M6 8L2 12L6 16"></path>
+              </svg>
+            </div>
+            <div class="naro-compare-handle-line"></div>
+          </div>
+        </div>
       </div>
       <div class="naro-hero-content">
         <p class="naro-hero-brand">naro</p>
@@ -1509,12 +1800,19 @@
     <div class="naro-product-container">
       <!-- 画像ギャラリー -->
       <div class="naro-gallery">
-        <div class="naro-main-image">
+        <div class="naro-main-image" onclick="openLightbox()">
           <img 
             id="mainImage"
             src="{{ product.featured_image | image_url: width: 1000 }}" 
             alt="{{ product.featured_image.alt | escape }}"
           >
+          <div class="naro-zoom-hint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+              <path d="M11 8v6M8 11h6"></path>
+            </svg>
+          </div>
         </div>
         
         {% if product.images.size > 1 %}
@@ -1725,6 +2023,15 @@
     <a href="#product" class="naro-final-cta-button">今すぐ購入する</a>
   </section>
 
+  <!-- LIGHTBOX -->
+  <div class="naro-lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="naro-lightbox-close" onclick="closeLightbox(event)">&times;</button>
+    <button class="naro-lightbox-prev" onclick="prevImage(event)">&#10094;</button>
+    <button class="naro-lightbox-next" onclick="nextImage(event)">&#10095;</button>
+    <img class="naro-lightbox-image" id="lightboxImage" src="" alt="">
+    <div class="naro-lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
 </div>
 
 <script>
@@ -1747,6 +2054,157 @@
     document.querySelectorAll('.naro-thumbnail').forEach(el => el.classList.remove('active'));
     element.classList.add('active');
   }
+
+  // ライトボックス
+  const productImages = [
+    {% for image in product.images %}
+      '{{ image | image_url: width: 1500 }}'{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+  let currentImageIndex = 0;
+
+  function openLightbox() {
+    const mainImageSrc = document.getElementById('mainImage').src;
+    // 現在表示中の画像のインデックスを取得
+    currentImageIndex = productImages.findIndex(img => mainImageSrc.includes(img.split('?')[0].split('/').pop().split('.')[0]));
+    if (currentImageIndex === -1) currentImageIndex = 0;
+    
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    
+    lightboxImage.src = productImages[currentImageIndex];
+    updateCounter();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(event) {
+    if (event.target === event.currentTarget || event.target.classList.contains('naro-lightbox-close')) {
+      const lightbox = document.getElementById('lightbox');
+      const counter = document.getElementById('lightboxCounter');
+      const prevBtn = document.querySelector('.naro-lightbox-prev');
+      const nextBtn = document.querySelector('.naro-lightbox-next');
+      
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      
+      // ボタンを戻す
+      counter.style.display = '';
+      prevBtn.style.display = '';
+      nextBtn.style.display = '';
+    }
+  }
+
+  function prevImage(event) {
+    event.stopPropagation();
+    currentImageIndex = (currentImageIndex - 1 + productImages.length) % productImages.length;
+    document.getElementById('lightboxImage').src = productImages[currentImageIndex];
+    updateCounter();
+  }
+
+  function nextImage(event) {
+    event.stopPropagation();
+    currentImageIndex = (currentImageIndex + 1) % productImages.length;
+    document.getElementById('lightboxImage').src = productImages[currentImageIndex];
+    updateCounter();
+  }
+
+  function updateCounter() {
+    document.getElementById('lightboxCounter').textContent = (currentImageIndex + 1) + ' / ' + productImages.length;
+  }
+
+  // キーボード操作
+  document.addEventListener('keydown', function(e) {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeLightbox({target: lightbox, currentTarget: lightbox});
+    if (e.key === 'ArrowLeft') prevImage({stopPropagation: () => {}});
+    if (e.key === 'ArrowRight') nextImage({stopPropagation: () => {}});
+  });
+
+  // ヒーロー画像のライトボックス
+  function openHeroLightbox() {
+    const heroImage = document.querySelector('.naro-hero-image img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const counter = document.getElementById('lightboxCounter');
+    const prevBtn = document.querySelector('.naro-lightbox-prev');
+    const nextBtn = document.querySelector('.naro-lightbox-next');
+    
+    lightboxImage.src = heroImage.src;
+    counter.style.display = 'none';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Before/After スライダー
+  (function() {
+    const slider = document.getElementById('compareSlider');
+    if (!slider) return;
+
+    const handle = document.getElementById('compareHandle');
+    const beforeDiv = slider.querySelector('.naro-compare-before');
+    let isDragging = false;
+
+    function getPosition(e) {
+      const rect = slider.getBoundingClientRect();
+      let x;
+      if (e.type.includes('touch')) {
+        x = e.touches[0].clientX - rect.left;
+      } else {
+        x = e.clientX - rect.left;
+      }
+      return Math.max(0, Math.min(x, rect.width));
+    }
+
+    function updateSlider(x) {
+      const rect = slider.getBoundingClientRect();
+      const percent = (x / rect.width) * 100;
+      beforeDiv.style.width = percent + '%';
+      handle.style.left = percent + '%';
+    }
+
+    function startDrag(e) {
+      e.preventDefault();
+      isDragging = true;
+      slider.classList.add('dragging');
+    }
+
+    function doDrag(e) {
+      if (!isDragging) return;
+      const x = getPosition(e);
+      updateSlider(x);
+    }
+
+    function endDrag() {
+      isDragging = false;
+      slider.classList.remove('dragging');
+    }
+
+    // Mouse events
+    handle.addEventListener('mousedown', startDrag);
+    slider.addEventListener('mousedown', function(e) {
+      startDrag(e);
+      const x = getPosition(e);
+      updateSlider(x);
+    });
+    document.addEventListener('mousemove', doDrag);
+    document.addEventListener('mouseup', endDrag);
+
+    // Touch events
+    handle.addEventListener('touchstart', startDrag, { passive: false });
+    slider.addEventListener('touchstart', function(e) {
+      startDrag(e);
+      const x = getPosition(e);
+      updateSlider(x);
+    }, { passive: false });
+    document.addEventListener('touchmove', doDrag, { passive: true });
+    document.addEventListener('touchend', endDrag);
+  })();
 
   // FAQ開閉
   function toggleFaq(element) {
