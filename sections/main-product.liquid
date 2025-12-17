@@ -1,6 +1,6 @@
 {% comment %}
-  naro - LP風商品ページ v6
-  シンプル構成：ヒーロー → 違い → 商品 → FAQ
+  naro - LP風商品ページ v7
+  シンプル構成：ヒーロー → 違い → 商品 → レビュー → FAQ
 {% endcomment %}
 
 <style>
@@ -948,10 +948,27 @@
     margin-top: 12px;
   }
 
+  /* ===== REVIEWS SECTION ===== */
+  .naro-reviews {
+    padding: 100px 20px;
+    background: var(--cream);
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews {
+      padding: 64px 16px;
+    }
+  }
+
+  .naro-reviews-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
   /* ===== FAQ SECTION ===== */
   .naro-faq {
     padding: 100px 20px;
-    background: var(--cream);
+    background: var(--white);
   }
 
   @media (max-width: 768px) {
@@ -1003,7 +1020,7 @@
   }
 
   .naro-faq-item {
-    background: var(--white);
+    background: var(--cream);
     border-radius: 12px;
     overflow: hidden;
   }
@@ -1524,6 +1541,15 @@
     </div>
   </section>
 
+  <!-- REVIEWS SECTION -->
+  <section class="naro-reviews" id="reviews">
+    <div class="naro-reviews-inner">
+      <p class="naro-section-label animate-on-scroll">Reviews</p>
+      <h2 class="naro-section-title animate-on-scroll">お客様の声</h2>
+      <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+    </div>
+  </section>
+
   <!-- FAQ SECTION -->
   <section class="naro-faq">
     <div class="naro-section-inner">
@@ -1851,11 +1877,11 @@
 
 {% schema %}
 {
-  "name": "naro LP Product v6",
+  "name": "naro LP Product v7",
   "settings": [],
   "presets": [
     {
-      "name": "naro LP Product v6"
+      "name": "naro LP Product v7"
     }
   ]
 }
