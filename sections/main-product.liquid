@@ -1,6 +1,6 @@
 {% comment %}
-  naro - LP風商品ページ v7
-  シンプル構成：ヒーロー → 違い → 商品 → レビュー → FAQ
+  naro - LP風商品ページ v8
+  シンプル構成：ヒーロー → 違い → 商品 → レビュー（かっこいいUI） → FAQ
 {% endcomment %}
 
 <style>
@@ -948,7 +948,7 @@
     margin-top: 12px;
   }
 
-  /* ===== REVIEWS SECTION ===== */
+  /* ===== REVIEWS SECTION (CUSTOM UI) ===== */
   .naro-reviews {
     padding: 100px 20px;
     background: var(--cream);
@@ -961,8 +961,245 @@
   }
 
   .naro-reviews-inner {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+  }
+
+  .naro-reviews-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews-header {
+      margin-bottom: 32px;
+    }
+  }
+
+  .naro-reviews-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+    padding: 24px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews-summary {
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px;
+    }
+  }
+
+  .naro-reviews-score {
+    text-align: center;
+  }
+
+  .naro-reviews-score-number {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews-score-number {
+      font-size: 40px;
+    }
+  }
+
+  .naro-reviews-score-max {
+    font-size: 16px;
+    color: var(--gray-500);
+    font-weight: 400;
+  }
+
+  .naro-reviews-stars {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .naro-reviews-stars .star {
+    color: #fbbf24;
+    font-size: 20px;
+  }
+
+  .naro-reviews-stars .star.empty {
+    color: var(--gray-200);
+  }
+
+  .naro-reviews-count {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-top: 8px;
+  }
+
+  .naro-reviews-divider {
+    width: 1px;
+    height: 80px;
+    background: var(--gray-200);
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews-divider {
+      width: 100%;
+      height: 1px;
+    }
+  }
+
+  .naro-reviews-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .naro-reviews-cta p {
+    font-size: 14px;
+    color: var(--gray-500);
+  }
+
+  .naro-write-review-btn {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    padding: 14px 32px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .naro-write-review-btn:hover {
+    background: var(--gray-700);
+    transform: translateY(-2px);
+  }
+
+  /* Judge.me Widget Container */
+  .naro-reviews-widget {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .naro-reviews-widget {
+      margin-top: 32px;
+    }
+  }
+
+  /* Judge.me スタイル上書き */
+  .jdgm-widget {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  }
+
+  .jdgm-rev-widg {
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .jdgm-rev-widg__header {
+    display: none !important;
+  }
+
+  .jdgm-rev {
+    background: var(--white) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    margin-bottom: 16px !important;
+    border: none !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04) !important;
+  }
+
+  @media (max-width: 768px) {
+    .jdgm-rev {
+      padding: 20px !important;
+      border-radius: 10px !important;
+    }
+  }
+
+  .jdgm-rev__header {
+    margin-bottom: 12px !important;
+  }
+
+  .jdgm-rev__author {
+    font-weight: 600 !important;
+    color: var(--black) !important;
+  }
+
+  .jdgm-rev__timestamp {
+    color: var(--gray-500) !important;
+    font-size: 12px !important;
+  }
+
+  .jdgm-rev__body {
+    color: var(--gray-700) !important;
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+  }
+
+  .jdgm-rev__pics {
+    margin-top: 16px !important;
+  }
+
+  .jdgm-rev__pic-img {
+    border-radius: 8px !important;
+  }
+
+  .jdgm-paginate {
+    margin-top: 24px !important;
+  }
+
+  .jdgm-paginate__page {
+    background: var(--white) !important;
+    border: 1px solid var(--gray-200) !important;
+    border-radius: 6px !important;
+    color: var(--black) !important;
+  }
+
+  .jdgm-paginate__page.jdgm-paginate__page--current {
+    background: var(--black) !important;
+    border-color: var(--black) !important;
+    color: var(--white) !important;
+  }
+
+  /* レビューがない場合 */
+  .naro-no-reviews {
+    text-align: center;
+    padding: 48px 24px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  @media (max-width: 768px) {
+    .naro-no-reviews {
+      padding: 32px 20px;
+    }
+  }
+
+  .naro-no-reviews-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .naro-no-reviews-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .naro-no-reviews-text {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 24px;
   }
 
   /* ===== FAQ SECTION ===== */
@@ -1544,9 +1781,38 @@
   <!-- REVIEWS SECTION -->
   <section class="naro-reviews" id="reviews">
     <div class="naro-reviews-inner">
-      <p class="naro-section-label animate-on-scroll">Reviews</p>
-      <h2 class="naro-section-title animate-on-scroll">お客様の声</h2>
-      <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+      <div class="naro-reviews-header">
+        <p class="naro-section-label animate-on-scroll">Reviews</p>
+        <h2 class="naro-section-title animate-on-scroll" style="margin-bottom: 0;">お客様の声</h2>
+        
+        <div class="naro-reviews-summary animate-on-scroll">
+          <div class="naro-reviews-score">
+            <div class="naro-reviews-score-number">
+              <span class="jdgm-prev-badge__stars" data-score="{{ product.metafields.judgeme.average_rating | default: '0.0' }}"></span>
+            </div>
+            <div class="naro-reviews-stars">
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star">★</span>
+            </div>
+            <p class="naro-reviews-count">{{ product.metafields.judgeme.review_count | default: 0 }}件のレビュー</p>
+          </div>
+          
+          <div class="naro-reviews-divider"></div>
+          
+          <div class="naro-reviews-cta">
+            <p>ご購入いただいた方へ</p>
+            <button class="naro-write-review-btn" onclick="openJudgeMeForm()">レビューを書く</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Judge.me Widget -->
+      <div class="naro-reviews-widget">
+        <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+      </div>
     </div>
   </section>
 
@@ -1744,6 +2010,23 @@
     accordion.classList.toggle('open');
   }
 
+  // Judge.me レビューフォームを開く
+  function openJudgeMeForm() {
+    // Judge.meのレビューフォームを開くトリガー
+    if (typeof jdgm !== 'undefined' && jdgm.reviewForm) {
+      jdgm.reviewForm.open();
+    } else {
+      // フォールバック: ウィジェット内の「レビューを書く」をクリック
+      const writeReviewBtn = document.querySelector('.jdgm-write-rev-link, .jdgm-rev-widg__write-rev-link, [data-jdgm-write-rev]');
+      if (writeReviewBtn) {
+        writeReviewBtn.click();
+      } else {
+        // 最終フォールバック: レビューセクションにスクロール
+        document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
+
   // バリアント更新
   const productVariants = {{ product.variants | json }};
 
@@ -1877,11 +2160,11 @@
 
 {% schema %}
 {
-  "name": "naro LP Product v7",
+  "name": "naro LP Product v8",
   "settings": [],
   "presets": [
     {
-      "name": "naro LP Product v7"
+      "name": "naro LP Product v8"
     }
   ]
 }
